@@ -43,9 +43,7 @@ parasails.registerPage('homepage', {
     },
 
     _initMap: function(){
-      var pixiRoot = new PIXI.Application(750, 400, { backgroundColor : 0x6BACDE });
-
-
+      var pixiRoot = new PIXI.Application($("body").width()/2, 400, { backgroundColor : 0x6BACDE });
       ////// Here, we create our traviso instance and add on top of pixi
       document.getElementById('map-container').appendChild(pixiRoot.view);
       console.log(pixiRoot.view);
