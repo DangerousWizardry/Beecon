@@ -1,0 +1,167 @@
+@footer-height: 40px;
+@container-md-max-width: 1100px;
+
+[v-cloak] { display: none; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+h1{
+  font-weight: bold;
+  font-size: 1.7rem;
+  color: @text-normal;
+}
+#page-wrap {
+  height: 100%;
+  /* lesshint-disable */height: auto !important;/* lesshint-enable */
+  // ^^The above is to disable "importantRule" and "duplicateProperty" rules.
+  min-height: 100%;
+  margin-left: 180px;
+  position: relative;
+}
+
+#custom-bar{
+  position: fixed;
+  width: 180px;
+  height: 100%;
+  border-right: 1px solid #707070;
+}
+#custom-bar a{
+  text-decoration: none!important;
+  color: @text-normal;
+}
+
+#custom-bar a:hover{
+  color: darken(@text-normal,20%);
+}
+
+#custom-bar > .sponsor{
+  position: absolute;
+  bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+#custom-bar > .sponsor > img {
+  width: 60px;
+}
+
+
+.nav-logo{
+  color: @text-normal;
+  font-family: "Quicksand", sans-serif;
+  font-weight: @normal;
+  font-size: 40px;
+  position: relative;
+  margin-top:40px;
+  margin-left: 15px;
+}
+
+.nav-logo > .n{
+  position: absolute;
+  width: 40px;
+  right: 13px;
+  top: 22px;
+  transform: rotate(180deg);
+}
+
+.nav-logo > .bee{
+  width: 50px;
+  position: absolute;
+  top: -35px;
+  left: 40px;
+  transform: rotate(60deg);
+  cursor: pointer;
+  animation: eigth-bee-slow 4s linear infinite both;
+}
+
+.bee:hover{
+  animation: eigth-bee 2s linear infinite both;
+}
+
+.item{
+  padding: 15px 10px;
+  position: relative;
+}
+.item.active > i {
+  color:@brand;
+  transform: rotate(90deg);
+  transition: 0.5s all;
+}
+
+.item.active:hover > i {
+  transform: rotate(0deg);
+}
+
+.item > i{
+  position: absolute;
+  top:10px;
+  left: 15px;
+  transform: rotate(0deg);
+  transition: 0.5s all;
+}
+
+.item:hover > i {
+  transform: rotate(90deg);
+}
+
+.item > span{
+  margin-left: 30px;
+}
+
+#page-footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  height: @footer-height;
+  width: 100%;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  .xs-only {
+    display: none;
+  }
+}
+
+body.detected-mobile {
+  // Above and beyond the media queries below, this selector (which relies on
+  // `parasails` automatically attaching this class, if appropriate) contains
+  // styles intended to be activated specifically when loaded from a recognized
+  // mobile device, regardless of viewport dimensions.  This includes tablet
+  // devices (like the iPad) as well as handset devices (like the iPhone).
+  // …
+}
+
+@media (max-width: 800px) {
+  #page-wrap {
+    padding-bottom: 75px;
+    #page-footer {
+      height: 75px;
+      .copy, .nav {
+        width: 100%;
+        display: block;
+        text-align: center;
+        .nav-item {
+          display: inline-block;
+          a {
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 450px) {
+  #page-wrap {
+    padding-bottom: 85px;
+    #page-footer {
+      height: 85px;
+      .xs-only {
+        display: block;
+      }
+    }
+  }
+}

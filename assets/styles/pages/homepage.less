@@ -1,0 +1,120 @@
+#homepage {
+  #row-1{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  #col-1{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    flex: 2 1 auto;
+  }
+  #map{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 50px 30px 50px;
+    border-bottom: 1px solid @text-normal;
+    h1{
+      margin: 10px 0 20px 0;
+    }
+  }
+  #entity-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 30px 30px 30px;
+    h1{
+      margin: 10px 0 20px 0;
+    }
+  }
+  #entities{
+    padding: 0 0 30px 30px;
+    height: 100vh;
+    border-left: 1px solid @text-normal;
+    flex: 1 1 350px;
+    h1{
+      text-align: center;
+      margin: 10px 0 20px 0;
+    }
+    .entity-container{
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      overflow-y: auto;//Need scroll when too much Entity to list
+      padding-right: 30px;
+      .entity{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid @text-normal;
+        padding: 5px 0;
+        img{
+          width: 40px;
+          height:50px;
+        }
+        .entity-info{
+          display: flex;
+          flex-direction: column;
+          .display-name{
+            font-weight: bold;
+          }
+          .last-received{
+            font-size: 0.8rem;
+          }
+        }
+      }
+      .entity:last-child{
+        border: none;
+      }
+    }
+  }
+  .blue{
+    color: @blue;
+  }
+  .purple{
+    color: @purple;
+  }
+  .green{
+    color: @green;
+  }
+  .hero {
+    padding-top: 100px;
+    padding-bottom: 25px;
+    color: @brand;
+    position: relative;
+    .hero-image {
+      width: 220px;
+      height: 170px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      img {
+        position: absolute;
+      }
+    }
+  }
+  @media (max-width: 991px) {
+    .setup {
+      .step {
+        padding-left: 0px;
+        .step-image {
+          display: none;
+        }
+      }
+    }
+  }
+  @media (max-width: 450px) {
+    .hero {
+      padding-top: 50px;
+        h1.display-4 {
+        font-size: 34px;
+      }
+    }
+  }
+}

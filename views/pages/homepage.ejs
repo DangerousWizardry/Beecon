@@ -1,0 +1,38 @@
+<div id="homepage" :class="[heroHeightSet ? '' : 'uninitialized']" v-cloak>
+  <div id="row-1" class="">
+    <div id="col-1">
+      <div id="map">
+        <h1><span class="blue">Hospital</span> Map</h1>
+        <div id="map-container">
+
+        </div>
+      </div>
+      <div id="entity-info">
+        <h1><span class="purple">Entity</span> Info</h1>
+      </div>
+    </div>
+    <div id="entities">
+      <h1><span class="green">Active</span> Entities <small>(X)</small></h1>
+      <div class="entity-container">
+        <div class="entity">
+          <img src="/images/medic.png" alt="">
+          <div class="entity-info">
+            <span class="display-name">Doctor 1</span>
+            <span class="last-received">Active</span>
+          </div>
+          <i class="fa fa-2x fa-signal green"></i>
+        </div>
+        <div class="entity">
+          <img src="/images/medic.png" alt="">
+          <div class="entity-info">
+            <span class="entity-usual-name">Doctor 2</span>
+            <span class="last-received">Active</span>
+          </div>
+          <i class="fa fa-2x fa-signal green"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>
