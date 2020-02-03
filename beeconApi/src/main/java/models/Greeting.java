@@ -5,11 +5,19 @@
  */
 package models;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import org.hibernate.annotations.GenericGenerator;
+
 /**
  *
  * @author Admin
  */
-public class Greeting {
+@Entity
+public class Greeting implements Serializable {
+	@Id
 	private final long id;
 	private final String content;
 
