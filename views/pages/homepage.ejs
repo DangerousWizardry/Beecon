@@ -14,7 +14,9 @@
     <div id="entities">
       <h1><span class="green">Active</span> Entities <small>(X)</small></h1>
       <div class="entity-container">
-<%- include ../layouts/layout-entity-grid.ejs -%>
+        <% data.forEach(function(entity){ %>
+  <%- include('../layouts/layout-entity-grid.ejs', {entity: entity}); %>
+<% }); %>
       </div>
     </div>
   </div>

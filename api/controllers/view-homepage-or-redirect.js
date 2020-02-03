@@ -10,6 +10,7 @@ module.exports = {
   exits: {
 
     success: {
+      responseType: 'view',
       statusCode: 200,
       description: 'Requesting user is a guest, so show the public landing page.',
       viewTemplatePath: 'pages/homepage'
@@ -30,7 +31,10 @@ module.exports = {
     }
     else{
       var promise = await Entity.generateDummyValue();
-        return  { data : promise};
+        return  {
+          data : promise ,
+          name: "oui"
+        };
     }
 
     return {};

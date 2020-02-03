@@ -15,33 +15,31 @@ module.exports = {
     entityId: {
       type: 'integer',
       required: true,
-      unique: true
+      unique: true,
+      autoIncrement: true
     },
     entityDisplayName: {
       type: 'string',
-      required: true,
-      unique: true
+      required: true
     },
     entityFullName: {
       type: 'string',
-      required: true,
-      unique: true
+      required: true
     },
     entityMacAddress: {
       type: 'string',
-      required: true,
-      unique: true
+      required: true
     },
     entityRegistered: {
       type: 'boolean',
-      required: true,
+      required: true
     }
   },
 
   generateDummyValue : async function(opts){
     var entity = await Entity.find();
     console.log("Entity find"+JSON.stringify(entity));
-    if (!entity) {
+    if (!entity || entity.length == 0) {
       entity = await Entity.createEach([{
         entityId:1,
         entityDisplayName:"Docteur 1",
@@ -70,7 +68,6 @@ module.exports = {
         entityMacAddress:"134:21:88F3:FF::152:956:26B",
         entityRegistered:true
       }]).fetch();
-      console.log("Entity fetch"+entity);
     }
     else{
       return entity;
