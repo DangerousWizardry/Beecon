@@ -28,6 +28,10 @@ module.exports = {
     if (this.req.me) {
       throw {redirect:'/welcome'};
     }
+    else{
+      var promise = await Entity.generateDummyValue();
+        return  { data : promise};
+    }
 
     return {};
 
