@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package api;
+package isis.beecon.api;
 
 /**
  *
  * @author Admin
  */
-import models.Greeting;
+import isis.beecon.models.Greeting;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.web.bind.annotation.GetMapping;

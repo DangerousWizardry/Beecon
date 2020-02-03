@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
+package isis.beecon.models;
 
 import javax.persistence.Entity;
 import org.springframework.data.annotation.Id;
@@ -22,13 +22,21 @@ public class Beacons {
     private long yEmplacement;
     private String nom;
 
+    
+    public Beacons(long addMac, long xEmplacement, long yEmplacement, String nom){
+        this.addMac=addMac;
+        this.xEmplacement=xEmplacement;
+        this.yEmplacement=yEmplacement;
+        this.nom=nom;
+    }
+    public Beacons(){
+        
+    }
+    
     public long getId() {
         return addMac;
     }
 
-    public long getAddMac() {
-        return addMac;
-    }
 
     public void setAddMac(long addMac) {
         this.addMac = addMac;
