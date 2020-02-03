@@ -6,12 +6,15 @@
 package models;
 
 import java.util.Date;
-import org.springframework.data.annotation.Id;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  *
  * @author victoria
  */
+
+@Entity(name="User")
 public class User {
     @Id
     private String emailAdress;
