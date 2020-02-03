@@ -28,7 +28,7 @@ public class BeaconsController {
     }
     @GetMapping("/dummy")
     public void generateDummyBeacon(){
-        beaconDAO.save(new Beacons(167546,374,345,"beacon1"));
+        beaconDAO.save(new Beacons(1,167546,374,345,"beacon1"));
     }
     
 }

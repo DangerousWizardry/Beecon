@@ -16,6 +16,9 @@ import org.springframework.data.annotation.Id;
 public class Beacons {
 
     @javax.persistence.Id
+    private int id;
+    
+    
     private long addMac;
 
     private long xEmplacement;
@@ -23,7 +26,8 @@ public class Beacons {
     private String nom;
 
     
-    public Beacons(long addMac, long xEmplacement, long yEmplacement, String nom){
+    public Beacons(int id,long addMac, long xEmplacement, long yEmplacement, String nom){
+        this.id=id;
         this.addMac=addMac;
         this.xEmplacement=xEmplacement;
         this.yEmplacement=yEmplacement;
@@ -33,13 +37,72 @@ public class Beacons {
         
     }
     
-    public long getId() {
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the addMac
+     */
+    public long getAddMac() {
         return addMac;
     }
 
-
+    /**
+     * @param addMac the addMac to set
+     */
     public void setAddMac(long addMac) {
         this.addMac = addMac;
     }
+
+    /**
+     * @return the xEmplacement
+     */
+    public long getxEmplacement() {
+        return xEmplacement;
+    }
+
+    /**
+     * @param xEmplacement the xEmplacement to set
+     */
+    public void setxEmplacement(long xEmplacement) {
+        this.xEmplacement = xEmplacement;
+    }
+
+    /**
+     * @return the yEmplacement
+     */
+    public long getyEmplacement() {
+        return yEmplacement;
+    }
+
+    /**
+     * @param yEmplacement the yEmplacement to set
+     */
+    public void setyEmplacement(long yEmplacement) {
+        this.yEmplacement = yEmplacement;
+    }
+
+    /**
+     * @return the nom
+     */
+    public String getNom() {
+        return nom;
+    }
+
+    /**
+     * @param nom the nom to set
+     */
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+    
 
 }
