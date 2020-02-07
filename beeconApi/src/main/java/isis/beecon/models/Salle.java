@@ -22,7 +22,8 @@ public class Salle {
     private double yDebut;
     private double yFin;
 
-    public Salle (String NomSalle, double xDebut, double xFin, double yDebut, double yFin){
+    public Salle (int salleId, String NomSalle, double xDebut, double xFin, double yDebut, double yFin){
+        this.salleId=salleId;
         this.NomSalle=NomSalle;
         this.xDebut=xDebut;
         this.xFin=xFin;

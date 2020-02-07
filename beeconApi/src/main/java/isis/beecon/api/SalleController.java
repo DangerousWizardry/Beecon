@@ -35,9 +35,6 @@ public class SalleController {
         return salleDAO.getOne((long)id);
     }
     
-    public void DesSalles(){
-    Salle Salle1 = new Salle();
-    Salle Salle2 = new Salle();
-}
+    
    
 }

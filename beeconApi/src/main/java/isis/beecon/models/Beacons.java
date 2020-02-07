@@ -29,7 +29,7 @@ public class Beacons {
     private String nom;
     
     @ManyToOne
-    private Salle Salle;
+    private Salle salle;
     @ManyToMany
     private Collection<Position> positionCollection;
     
@@ -37,7 +37,10 @@ public class Beacons {
     
 
     
-    public Beacons(int id,long addMac, long xEmplacement, long yEmplacement, String nom){
+    public Beacons(int id,long addMac, long xEmplacement, long yEmplacement, String nom, Salle salle,Collection<Position> positionCollection ){
+        
+        this.salle= salle;
+        this.positionCollection=positionCollection;
         this.id=id;
         this.addMac=addMac;
         this.xEmplacement=xEmplacement;

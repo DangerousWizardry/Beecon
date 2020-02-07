@@ -33,7 +33,7 @@ public class DispositifController {
 		Random r = new Random();
 		if(dispositifDAO.findAll().size()==0){
 			for (int i = 0; i < 4; i++) {
-				dispositifDAO.save(new Dispositif(i, "Doctor "+i, "M. X", String.valueOf(r.nextInt()), true, r.nextInt()%4 , System.currentTimeMillis()));
+				dispositifDAO.save(new Dispositif(i, "Doctor "+i, "M. X", String.valueOf(r.nextInt()), true, r.nextInt()%4 , System.currentTimeMillis(), Position Position);
 			}
 		}
 		else{

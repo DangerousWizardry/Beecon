@@ -31,7 +31,8 @@ public class User {
     @OneToMany
     private Collection<Dispositif> dispositifCollection;
 
-    public User(int id, String emailAdress, String name, String surname, String password, boolean isSuperAdmin) {
+    public User(int id, String emailAdress, String name, String surname, String password, boolean isSuperAdmin, Collection<Dispositif> dispositifCollection) {
+        this.dispositifCollection=dispositifCollection;
         this.id = id;
         this.emailAdress = emailAdress;
         this.name = name;

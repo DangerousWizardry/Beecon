@@ -32,8 +32,10 @@ public class Dispositif implements Serializable{
         @ManyToOne
         private Position position;
 
-	public Dispositif(int entityId, String entityDisplayName, String entityFullName, String entityMacAddress, boolean entityRegistered, int deleteSignal, long deleteLastSeen) {
-		this.entityId = entityId;
+	public Dispositif(int entityId, String entityDisplayName, String entityFullName, String entityMacAddress,
+                boolean entityRegistered, int deleteSignal, long deleteLastSeen, Position position) {
+		this.position=position;
+                this.entityId = entityId;
 		this.entityDisplayName = entityDisplayName;
 		this.entityFullName = entityFullName;
 		this.entityMacAddress = entityMacAddress;
