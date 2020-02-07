@@ -5,9 +5,13 @@
  */
 package isis.beecon.models;
 
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -24,6 +28,11 @@ public class User {
     private String password;
     private boolean isSuperAdmin;
     private Date lastSeenAt;
+    @OneToMany
+    private Collection<Dispositif> dispositifCollection;
+    @JoinColumn
+    @ManyToOne
+    private Position position;
 
     public User(int id, String emailAdress, String name, String surname, String password, boolean isSuperAdmin) {
         this.id = id;
