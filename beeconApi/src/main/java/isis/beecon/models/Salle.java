@@ -6,8 +6,7 @@
 package isis.beecon.models;
 
 import javax.persistence.Entity;
-import org.springframework.data.annotation.Id;
-
+import javax.persistence.OneToMany;
 /**
  *
  * @author marie
@@ -22,26 +21,24 @@ public class Salle {
     private double xFin;
     private double yDebut;
     private double yFin;
-    private Beacons MonBeacon;
 
-    public Salle (String NomSalle, double xDebut, double xFin, double yDebut, double yFin, Beacons MonBeacon){
+    public Salle (String NomSalle, double xDebut, double xFin, double yDebut, double yFin){
         this.NomSalle=NomSalle;
         this.xDebut=xDebut;
         this.xFin=xFin;
         this.yDebut=yDebut;
         this.yFin=yFin;
-        this.MonBeacon=MonBeacon;
     }
     
     public Salle(){
         
     }
-    public String getClef(){
-        return this.NomSalle;
+    
+    public int getId(){
+        return salleId;
     }
-
-    public Beacons getMonBeacon() {
-        return MonBeacon;
+    public String getNomSalle(){
+        return this.NomSalle;
     }
 
     public double getxDebut() {
@@ -78,6 +75,14 @@ public class Salle {
 
     public void setyFin(double yFin) {
         this.yFin = yFin;
+    }
+
+    public int getSalleId() {
+        return salleId;
+    }
+
+    public void setSalleId(int salleId) {
+        this.salleId = salleId;
     }
     
     

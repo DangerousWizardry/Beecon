@@ -5,7 +5,10 @@
  */
 package isis.beecon.models;
 
+import java.util.Collection;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import org.springframework.data.annotation.Id;
 
 /**
@@ -24,6 +27,14 @@ public class Beacons {
     private long xEmplacement;
     private long yEmplacement;
     private String nom;
+    
+    @ManyToOne
+    private Salle Salle;
+    @ManyToMany
+    private Collection<Position> positionCollection;
+    
+    
+    
 
     
     public Beacons(int id,long addMac, long xEmplacement, long yEmplacement, String nom){

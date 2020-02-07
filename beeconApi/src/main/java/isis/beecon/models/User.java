@@ -30,9 +30,6 @@ public class User {
     private Date lastSeenAt;
     @OneToMany
     private Collection<Dispositif> dispositifCollection;
-    @JoinColumn
-    @ManyToOne
-    private Position position;
 
     public User(int id, String emailAdress, String name, String surname, String password, boolean isSuperAdmin) {
         this.id = id;

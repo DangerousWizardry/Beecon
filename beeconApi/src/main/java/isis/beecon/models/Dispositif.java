@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -27,6 +28,9 @@ public class Dispositif implements Serializable{
 	private boolean entityRegistered;
 	private int deleteSignal;
 	private long deleteLastSeen;
+        
+        @ManyToOne
+        private Position position;
 
 	public Dispositif(int entityId, String entityDisplayName, String entityFullName, String entityMacAddress, boolean entityRegistered, int deleteSignal, long deleteLastSeen) {
 		this.entityId = entityId;
