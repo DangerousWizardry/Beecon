@@ -30,8 +30,8 @@ public class SalleController {
         return salleDAO.findAll();
     }
     
-
-    //public Salle getSalleById(String NomSalle) {
-        //return salleDAO.getOne(NomSalle); 
-    //}
+    public Salle getUserById(int id){
+        return salleDAO.getOne((long)id);
+    }
+   
 }
