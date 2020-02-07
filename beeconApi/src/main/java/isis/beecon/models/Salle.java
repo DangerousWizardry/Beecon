@@ -15,8 +15,9 @@ import org.springframework.data.annotation.Id;
 @Entity(name = "Salle")
 public class Salle {
     @javax.persistence.Id
-    private String NomSalle;
+    private int salleId;
     
+    private String NomSalle;
     private double xDebut;
     private double xFin;
     private double yDebut;
