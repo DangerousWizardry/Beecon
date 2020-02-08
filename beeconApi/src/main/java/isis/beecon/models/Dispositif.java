@@ -6,12 +6,12 @@
 package isis.beecon.models;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -26,22 +26,16 @@ public class Dispositif implements Serializable{
 	private String entityFullName;
 	private String entityMacAddress;
 	private boolean entityRegistered;
-	private int deleteSignal;
-	private long deleteLastSeen;
         
-        @ManyToOne
-        private Position position;
+	@OneToMany
+    private List<Position> position;
 
-	public Dispositif(int entityId, String entityDisplayName, String entityFullName, String entityMacAddress,
-                boolean entityRegistered, int deleteSignal, long deleteLastSeen, Position position) {
-		this.position=position;
-                this.entityId = entityId;
+	public Dispositif(int entityId, String entityDisplayName, String entityFullName, String entityMacAddress, boolean entityRegistered) {
+        this.entityId = entityId;
 		this.entityDisplayName = entityDisplayName;
 		this.entityFullName = entityFullName;
 		this.entityMacAddress = entityMacAddress;
 		this.entityRegistered = entityRegistered;
-		this.deleteSignal = deleteSignal;
-		this.deleteLastSeen = deleteLastSeen;
 	}
 
 	public Dispositif(){}
@@ -86,20 +80,15 @@ public class Dispositif implements Serializable{
 		this.entityRegistered = entityRegistered;
 	}
 
-	public int getDeleteSignal() {
-		return deleteSignal;
+	public List<Position> getPosition() {
+		return position;
 	}
 
-	public void setDeleteSignal(int deleteSignal) {
-		this.deleteSignal = deleteSignal;
+	public void setPosition(List<Position> position) {
+		this.position = position;
 	}
 
-	public long getDeleteLastSeen() {
-		return deleteLastSeen;
-	}
 
-	public void setDeleteLastSeen(long deleteLastSeen) {
-		this.deleteLastSeen = deleteLastSeen;
-	}
-	
+
+
 }

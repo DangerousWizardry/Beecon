@@ -28,23 +28,5 @@ public class DispositifController {
 	public List<Dispositif> getAllDispositif(){
 		return dispositifDAO.findAll();
 	}
-	@GetMapping("/randomize")
-	public void randomize(){
-		Random r = new Random();
-		if(dispositifDAO.findAll().size()==0){
-			for (int i = 0; i < 4; i++) {
-				dispositifDAO.save(new Dispositif(i, "Doctor "+i, "M. X", String.valueOf(r.nextInt()), true, r.nextInt()%4 , System.currentTimeMillis(), Position Position);
-			}
-		}
-		else{
-			List<Dispositif> ds = dispositifDAO.findAll();
-			ds.forEach( (d) -> {
-				d.setDeleteLastSeen(System.currentTimeMillis());
-				d.setDeleteSignal(r.nextInt()%4);
-			});
-		}
-	}
-	
-	
     
 }

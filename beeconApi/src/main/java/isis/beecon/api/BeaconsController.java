@@ -7,7 +7,7 @@ package isis.beecon.api;
 
 import isis.beecon.dao.BeaconDAO;
 import java.util.List;
-import isis.beecon.models.Beacons;
+import isis.beecon.models.Beacon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,12 +23,8 @@ public class BeaconsController {
     @Autowired
     BeaconDAO beaconDAO;
     @GetMapping("/")
-    public List<Beacons> listAllBeacons(){
+    public List<Beacon> listAllBeacons(){
         return beaconDAO.findAll();
-    }
-    @GetMapping("/dummy")
-    public void generateDummyBeacon(){
-        beaconDAO.save(new Beacons(1,167546,374,345,"beacon1",));
     }
     
 }
