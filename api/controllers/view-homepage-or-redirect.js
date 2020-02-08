@@ -32,8 +32,7 @@ module.exports = {
     else{
       var promise = await Entity.generateDummyValue();
         return  {
-          data : promise ,
-          name: "oui"
+          data : promise
         };
     }
 

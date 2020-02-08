@@ -49,8 +49,8 @@ public class GeneratorController {
 		/*
 		Generating dummy rooms
 		 */
-		Salle salle1 = new Salle(0007, "B007", 0, 10, 0, 10);
-		Salle salle2 = new Salle(106, "B106", 10, 20, 10, 20);
+		Salle salle1 = new Salle("B007", 0, 10, 0, 10);
+		Salle salle2 = new Salle("B106", 10, 20, 10, 20);
 
 		salleDAO.save(salle1);
 		salleDAO.save(salle2);
@@ -58,8 +58,8 @@ public class GeneratorController {
 		/*
 		Generating dummy beacon
 		 */
-		Beacon beacon1 = new Beacon(01, "1234", 5, 5, "Beacon1", salle1);
-		Beacon beacon2 = new Beacon(02, "1234", 15, 15, "Beacon2", salle2);
+		Beacon beacon1 = new Beacon("1234", 5, 5, "Beacon1", salle1);
+		Beacon beacon2 = new Beacon("1234", 15, 15, "Beacon2", salle2);
 
 		beaconsDAO.save(beacon1);
 		beaconsDAO.save(beacon2);
@@ -67,8 +67,8 @@ public class GeneratorController {
 		/*
 		Generating dummy devices
 		 */
-		Dispositif dispositif1 = new Dispositif(11, "smartphone1", "fullname1", "macadress", true);
-		Dispositif dispositif2 = new Dispositif(34, "smartphone2", "fullname2", "macadress", true);
+		Dispositif dispositif1 = new Dispositif("smartphone1", "fullname1", "macadress", true);
+		Dispositif dispositif2 = new Dispositif("smartphone2", "fullname2", "macadress", true);
 
 		dispositifDAO.save(dispositif1);
 		dispositifDAO.save(dispositif2);
@@ -85,8 +85,8 @@ public class GeneratorController {
 		/*
 		Generating dummy user
 		 */
-		User user1 = new User(100, "cent@gmail.com", "Cent", "X", "SuperPassword", false);
-		User user2 = new User(200, "deuxcent@gmail.com", "deuxcent", "X", "SuperPassword", false);
+		User user1 = new User("cent@gmail.com", "Cent", "X", "SuperPassword", false);
+		User user2 = new User("deuxcent@gmail.com", "deuxcent", "X", "SuperPassword", false);
 
 		userDAO.save(user1);
 		userDAO.save(user2);

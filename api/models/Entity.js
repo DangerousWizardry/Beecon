@@ -38,7 +38,6 @@ module.exports = {
 
   generateDummyValue : async function(opts){
     var entity = await Entity.find();
-    console.log("Entity find"+JSON.stringify(entity));
     if (!entity || entity.length == 0) {
       entity = await Entity.createEach([{
         entityId:1,

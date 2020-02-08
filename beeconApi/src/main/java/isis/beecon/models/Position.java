@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
@@ -17,6 +19,9 @@ import javax.persistence.OneToOne;
 public class Position implements Serializable{
     
     @Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int idPosition;
+	
     Date timeStamp;
     float attenuation;
 	
@@ -32,7 +37,14 @@ public class Position implements Serializable{
 		this.beacon = beacon;
 		this.dispositif = dispositif;
 	}
+	public Position(){
+		
+	}
 
+	public int getIdPosition() {
+		return idPosition;
+	}
+	
 	public Date getTimeStamp() {
 		return timeStamp;
 	}

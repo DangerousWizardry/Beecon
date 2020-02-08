@@ -6,7 +6,11 @@
 package isis.beecon.models;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 /**
  *
  * @author marie
@@ -14,6 +18,7 @@ import javax.persistence.OneToMany;
 @Entity(name = "Salle")
 public class Salle {
     @javax.persistence.Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
     private int salleId;
     
     private String NomSalle;
@@ -21,9 +26,10 @@ public class Salle {
     private double xFin;
     private double yDebut;
     private double yFin;
-
-    public Salle (int salleId, String NomSalle, double xDebut, double xFin, double yDebut, double yFin){
-        this.salleId=salleId;
+    @OneToOne(fetch = FetchType.LAZY)
+	private Beacon beacon;
+	
+    public Salle (String NomSalle, double xDebut, double xFin, double yDebut, double yFin){
         this.NomSalle=NomSalle;
         this.xDebut=xDebut;
         this.xFin=xFin;
@@ -34,59 +40,59 @@ public class Salle {
     public Salle(){
         
     }
-    
-    public int getId(){
-        return salleId;
-    }
-    public String getNomSalle(){
-        return this.NomSalle;
-    }
 
-    public double getxDebut() {
-        return xDebut;
-    }
+	public int getSalleId() {
+		return salleId;
+	}
 
-    public double getxFin() {
-        return xFin;
-    }
+	public String getNomSalle() {
+		return NomSalle;
+	}
 
-    public double getyDebut() {
-        return yDebut;
-    }
+	public void setNomSalle(String NomSalle) {
+		this.NomSalle = NomSalle;
+	}
 
-    public double getyFin() {
-        return yFin;
-    }
-    
-    public void setNomSalle(String NomSalle) {
-        this.NomSalle = NomSalle;
-    }
+	public double getxDebut() {
+		return xDebut;
+	}
 
-    public void setxDebut(double xDebut) {
-        this.xDebut = xDebut;
-    }
+	public void setxDebut(double xDebut) {
+		this.xDebut = xDebut;
+	}
 
-    public void setxFin(double xFin) {
-        this.xFin = xFin;
-    }
+	public double getxFin() {
+		return xFin;
+	}
 
-    public void setyDebut(double yDebut) {
-        this.yDebut = yDebut;
-    }
+	public void setxFin(double xFin) {
+		this.xFin = xFin;
+	}
 
-    public void setyFin(double yFin) {
-        this.yFin = yFin;
-    }
+	public double getyDebut() {
+		return yDebut;
+	}
 
-    public int getSalleId() {
-        return salleId;
-    }
+	public void setyDebut(double yDebut) {
+		this.yDebut = yDebut;
+	}
 
-    public void setSalleId(int salleId) {
-        this.salleId = salleId;
-    }
-    
-    
+	public double getyFin() {
+		return yFin;
+	}
+
+	public void setyFin(double yFin) {
+		this.yFin = yFin;
+	}
+
+	public Beacon getBeacon() {
+		return beacon;
+	}
+
+	public void setBeacon(Beacon beacon) {
+		this.beacon = beacon;
+	}
+	
 }
 
 

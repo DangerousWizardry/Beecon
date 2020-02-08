@@ -2,9 +2,6 @@ parasails.registerPage('homepage', {
   //  ╦╔╗╔╦╔╦╗╦╔═╗╦    ╔═╗╔╦╗╔═╗╔╦╗╔═╗
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
-  data: {
-    heroHeightSet: false,
-  },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
   //  ║  ║╠╣ ║╣ ║  ╚╦╝║  ║  ║╣
@@ -15,7 +12,6 @@ parasails.registerPage('homepage', {
 
   },
   mounted: async function(){
-    this._setHeroHeight();
     this._initMap();
   },
 
@@ -24,24 +20,15 @@ parasails.registerPage('homepage', {
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
 
-    clickHeroButton: async function() {
-      // Scroll to the 'get started' section:
-      $('html, body').animate({
-        scrollTop: this.$find('[role="scroll-destination"]').offset().top
-      }, 500);
-    },
 
-    // Private methods not tied to a particular DOM event are prefixed with _
-    _setHeroHeight: function() {
-      var $hero = this.$find('[full-page-hero]');
-      var headerHeight = $('#page-header').outerHeight();
-      var heightToSet = $(window).height();
-      heightToSet = Math.max(heightToSet, 500);//« ensure min height of 500px - header height
-      heightToSet = Math.min(heightToSet, 1000);//« ensure max height of 1000px - header height
-      $hero.css('min-height', heightToSet - headerHeight+'px');
-      this.heroHeightSet = true;
+    clickEntity: async function() {
+      console.log($.get("/api?request=dispositifs"));
+      /*.then((data) =>    {
+        document.getElementById('entity-info-data').innerHTML = data;
+        console.log(data);
+      });*/
+      
     },
-
     _initMap: function(){
       var pixiRoot = new PIXI.Application($("body").width()/2, 400, { backgroundColor : 0x6BACDE });
       ////// Here, we create our traviso instance and add on top of pixi

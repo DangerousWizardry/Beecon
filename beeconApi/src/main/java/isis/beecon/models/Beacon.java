@@ -2,12 +2,15 @@ package isis.beecon.models;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.OneToOne;
 
 @Entity(name = "Beacon")
 public class Beacon {
 
     @javax.persistence.Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
      
     private String addMac;
@@ -21,9 +24,8 @@ public class Beacon {
     private Salle salle;
     
     
-    public Beacon(int id,String addMac, int xEmplacement, int yEmplacement, String nom, Salle salle){
+    public Beacon(String addMac, int xEmplacement, int yEmplacement, String nom, Salle salle){
         this.salle= salle;
-        this.id=id;
         this.addMac=addMac;
         this.xEmplacement=xEmplacement;
         this.yEmplacement=yEmplacement;
@@ -35,10 +37,6 @@ public class Beacon {
 
 	public int getId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getAddMac() {

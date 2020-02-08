@@ -30,8 +30,7 @@ public class Dispositif implements Serializable{
 	@OneToMany
     private List<Position> position;
 
-	public Dispositif(int entityId, String entityDisplayName, String entityFullName, String entityMacAddress, boolean entityRegistered) {
-        this.entityId = entityId;
+	public Dispositif (String entityDisplayName, String entityFullName, String entityMacAddress, boolean entityRegistered) {
 		this.entityDisplayName = entityDisplayName;
 		this.entityFullName = entityFullName;
 		this.entityMacAddress = entityMacAddress;
