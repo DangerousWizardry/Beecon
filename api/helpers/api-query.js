@@ -49,7 +49,6 @@ module.exports = {
         throw 'apiFailed';
       }
       else {
-        sails.log.info(response);
         sails.log.info(body);
         return exits.success(body);
       }

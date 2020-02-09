@@ -22,7 +22,7 @@ parasails.registerPage('homepage', {
 
 
     clickEntity: async function() {
-      console.log($.get("/api?request=dispositifs"));
+      var data = await $.get("/api?request=dispositifs");
       /*.then((data) =>    {
         document.getElementById('entity-info-data').innerHTML = data;
         console.log(data);
