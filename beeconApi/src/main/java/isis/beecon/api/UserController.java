@@ -6,7 +6,7 @@
 package isis.beecon.api;
 
 import isis.beecon.dao.UserDao;
-import isis.beecon.models.User;
+import isis.beecon.models.ApplicationUser;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,11 +23,11 @@ public class UserController {
     @Autowired
     UserDao userDao;
    
-    public List<User> listAllUsers(){
+    public List<ApplicationUser> listAllUsers(){
         return userDao.findAll();
     }
     
-    public User getUserById(int id){
+    public ApplicationUser getUserById(int id){
         return userDao.getOne((long)id);
     }
 }

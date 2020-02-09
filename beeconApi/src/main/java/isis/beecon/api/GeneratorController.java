@@ -14,7 +14,7 @@ import isis.beecon.models.Beacon;
 import isis.beecon.models.Dispositif;
 import isis.beecon.models.Position;
 import isis.beecon.models.Salle;
-import isis.beecon.models.User;
+import isis.beecon.models.ApplicationUser;
 import java.util.Arrays;
 import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,8 +52,8 @@ public class GeneratorController {
 		Salle salle1 = new Salle("B007", 0, 10, 0, 10);
 		Salle salle2 = new Salle("B106", 10, 20, 10, 20);
 
-		salleDAO.save(salle1);
-		salleDAO.save(salle2);
+		salle1 = salleDAO.save(salle1);
+		salle2 = salleDAO.save(salle2);
 
 		/*
 		Generating dummy beacon
@@ -61,8 +61,8 @@ public class GeneratorController {
 		Beacon beacon1 = new Beacon("1234", 5, 5, "Beacon1", salle1);
 		Beacon beacon2 = new Beacon("1234", 15, 15, "Beacon2", salle2);
 
-		beaconsDAO.save(beacon1);
-		beaconsDAO.save(beacon2);
+		beacon1 = beaconsDAO.save(beacon1);
+		beacon2 = beaconsDAO.save(beacon2);
 
 		/*
 		Generating dummy devices
@@ -70,8 +70,8 @@ public class GeneratorController {
 		Dispositif dispositif1 = new Dispositif("smartphone1", "fullname1", "macadress", true);
 		Dispositif dispositif2 = new Dispositif("smartphone2", "fullname2", "macadress", true);
 
-		dispositifDAO.save(dispositif1);
-		dispositifDAO.save(dispositif2);
+		dispositif1 = dispositifDAO.save(dispositif1);
+		dispositif2 = dispositifDAO.save(dispositif2);
 
 		/*
 		Generating dummy position
@@ -85,8 +85,8 @@ public class GeneratorController {
 		/*
 		Generating dummy user
 		 */
-		User user1 = new User("cent@gmail.com", "Cent", "X", "SuperPassword", false);
-		User user2 = new User("deuxcent@gmail.com", "deuxcent", "X", "SuperPassword", false);
+		ApplicationUser user1 = new ApplicationUser("cent@gmail.com", "Cent", "X", "SuperPassword", false);
+		ApplicationUser user2 = new ApplicationUser("deuxcent@gmail.com", "deuxcent", "X", "SuperPassword", false);
 
 		userDAO.save(user1);
 		userDAO.save(user2);

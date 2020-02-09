@@ -5,7 +5,7 @@
  */
 package isis.beecon.dao;
 
-import isis.beecon.models.User;
+import isis.beecon.models.ApplicationUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +15,5 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface UserDao extends JpaRepository<User,Long>{
+public interface UserDao extends JpaRepository<ApplicationUser,Long>{
 }

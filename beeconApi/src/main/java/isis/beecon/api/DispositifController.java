@@ -7,11 +7,11 @@ package isis.beecon.api;
 
 import isis.beecon.dao.DispositifDAO;
 import isis.beecon.models.Dispositif;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -24,9 +24,19 @@ public class DispositifController {
     @Autowired
     DispositifDAO dispositifDAO;
 	
-    @GetMapping("")
+    @RequestMapping(value = "",
+            params = {"short"})
+    @ResponseBody
+	public List<Dispositif> getAllDispositifShort(){
+		List<Dispositif> listeDispositifs = dispositifDAO.findAll();
+		listeDispositifs.forEach((dispositif ->{
+			dispositif.getPosition();
+		}));
+		return listeDispositifs;
+	}
+	@RequestMapping(value = "")
+    @ResponseBody
 	public List<Dispositif> getAllDispositif(){
 		return dispositifDAO.findAll();
 	}
-    
 }
