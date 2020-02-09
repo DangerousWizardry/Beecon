@@ -5,20 +5,22 @@
  */
 package isis.beecon.models;
 
-import java.io.Serializable;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import java.util.Set;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author Admin
  */
 @Entity
-public class Dispositif implements Serializable{
+public class Dispositif{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int entityId;
@@ -27,8 +29,9 @@ public class Dispositif implements Serializable{
 	private String entityMacAddress;
 	private boolean entityRegistered;
         
-	@OneToMany
-    private List<Position> position;
+	@OneToMany(fetch=FetchType.EAGER,mappedBy="dispositif")
+	@JsonManagedReference
+    private Set<Position> position;
 
 	public Dispositif (String entityDisplayName, String entityFullName, String entityMacAddress, boolean entityRegistered) {
 		this.entityDisplayName = entityDisplayName;
@@ -79,11 +82,11 @@ public class Dispositif implements Serializable{
 		this.entityRegistered = entityRegistered;
 	}
 
-	public List<Position> getPosition() {
+	public Set<Position> getPosition() {
 		return position;
 	}
 
-	public void setPosition(List<Position> position) {
+	public void setPosition(Set<Position> position) {
 		this.position = position;
 	}
 

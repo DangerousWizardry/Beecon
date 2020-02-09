@@ -1,9 +1,11 @@
 package isis.beecon.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity(name = "Beacon")
@@ -20,7 +22,9 @@ public class Beacon {
 	
     private String nom;
     
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn
     private Salle salle;
     
     

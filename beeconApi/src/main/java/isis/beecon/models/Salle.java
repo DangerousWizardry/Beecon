@@ -5,6 +5,7 @@
  */
 package isis.beecon.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -26,6 +27,7 @@ public class Salle {
     private double xFin;
     private double yDebut;
     private double yFin;
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(fetch = FetchType.LAZY)
 	private Beacon beacon;
 	

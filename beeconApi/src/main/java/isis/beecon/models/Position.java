@@ -5,6 +5,10 @@
  */
 package isis.beecon.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import isis.beecon.helpers.DateSerializer;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -12,7 +16,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 
 @Entity
@@ -21,18 +26,23 @@ public class Position implements Serializable{
     @Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int idPosition;
-	
-    Date timeStamp;
+	@JsonSerialize(using = DateSerializer.class)
+    Date timestamp;
     float attenuation;
-	
-	@OneToOne(fetch = FetchType.EAGER)
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn
+	@JsonBackReference
 	Beacon beacon;
-	
-	@OneToOne(fetch = FetchType.EAGER)
+		
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="ENTITY_ID")
+	@JsonBackReference
 	Dispositif dispositif;
 
-	public Position(Date timeStamp, float attenuation, Beacon beacon, Dispositif dispositif) {
-		this.timeStamp = timeStamp;
+	public Position(Date timestamp, float attenuation, Beacon beacon, Dispositif dispositif) {
+		this.timestamp = timestamp;
 		this.attenuation = attenuation;
 		this.beacon = beacon;
 		this.dispositif = dispositif;
@@ -45,12 +55,12 @@ public class Position implements Serializable{
 		return idPosition;
 	}
 	
-	public Date getTimeStamp() {
-		return timeStamp;
+	public Date getTimestamp() {
+		return timestamp;
 	}
 
-	public void setTimeStamp(Date timeStamp) {
-		this.timeStamp = timeStamp;
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
 	}
 
 	public float getAttenuation() {
