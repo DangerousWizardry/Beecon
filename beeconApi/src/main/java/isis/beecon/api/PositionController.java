@@ -23,7 +23,7 @@ public class PositionController {
     @Autowired
     PositionDAO positionDao;
     
-    @GetMapping("/")
+    @GetMapping("")
     public List<Position> listAllPositions(){
         return positionDao.findAll();
     }

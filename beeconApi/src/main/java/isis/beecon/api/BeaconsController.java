@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BeaconsController {
     @Autowired
     BeaconDAO beaconDAO;
-    @GetMapping("/")
+    @GetMapping("")
     public List<Beacon> listAllBeacons(){
         return beaconDAO.findAll();
     }

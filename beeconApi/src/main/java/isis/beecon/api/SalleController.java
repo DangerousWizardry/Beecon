@@ -26,7 +26,7 @@ public class SalleController {
     @Autowired
     SalleDAO salleDAO;
 
-    @GetMapping("/")
+    @GetMapping("")
     public List<Salle> listAllSalle() {
         return salleDAO.findAll();
     }

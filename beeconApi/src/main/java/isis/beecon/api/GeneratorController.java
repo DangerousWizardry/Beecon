@@ -43,7 +43,7 @@ public class GeneratorController {
 	@Autowired
 	BeaconDAO beaconsDAO;
 
-	@GetMapping("/")
+	@GetMapping("")
 	public void generateur() {
 
 		/*
