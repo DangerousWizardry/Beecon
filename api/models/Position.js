@@ -1,7 +1,7 @@
 /**
- * User.js
+ * Position.js
  *
- * A user who can log in to this application.
+ * A entity detection result
  */
 
 module.exports = {
@@ -12,7 +12,19 @@ module.exports = {
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
 
-
+    idPosition: {
+      type: 'number',
+      required: true,
+      unique: true
+    },
+    timestamp: {
+      type: 'number',
+      required: true
+    },
+    attenuation: {
+      type: 'number',
+      required: true
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

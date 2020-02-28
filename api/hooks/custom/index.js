@@ -93,6 +93,45 @@ will be disabled and/or hidden in the UI.
       // ... Any other app-specific setup code that needs to run on lift,
       // even in production, goes here ...
 
+      var requestify = require('requestify');
+      var dataLastUpdatedAt = Date.now();
+      async function fetchPosition(isUpdate=true){
+        dataLastUpdatedAt = Date.now();
+        if (isUpdate) {
+          console.log('http://127.0.0.1:4910/dispositifs/?time='+dataLastUpdatedAt);
+          requestify.get('http://127.0.0.1:4910/dispositifs/?time='+dataLastUpdatedAt).then((response) => {
+              response.getBody();
+              let data = JSON.parse(response.body);
+              console.log("Data get :"+data.length);
+              data.forEach(async (item,index) => {
+              let dispositifToUpdate = await Dispositif.findOne({
+                entityId : item.entityId
+              });
+              if (dispositifToUpdate) {
+                dispositifToUpdate.positions = item.positions;
+              }
+              else{
+                await Dispositif.create(item);
+              }
+            });
+          });
+        }
+        else{
+              requestify.get('http://127.0.0.1:4910/dispositifs/').then((response) => {
+              response.getBody();
+              let data = JSON.parse(response.body);
+              data.forEach(async (item,index) => {
+              await Dispositif.create(item);
+            });
+          });
+        }
+        /*
+        let result = await Dispositif.find();
+        console.log(result);
+        */
+      }
+      setInterval(fetchPosition,5000);
+      fetchPosition(false);
     },
 
 
@@ -252,8 +291,6 @@ will be disabled and/or hidden in the UI.
         }
       }
     }
-
-
   };
 
 };

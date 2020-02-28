@@ -19,9 +19,13 @@ parasails.registerPage('homepage', {
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
-
-
     clickEntity: async function() {
+      io.socket.on('http://localhost:9092', function gotHelloMessage (data) {
+        console.log('User alert!', data);
+      });
+        io.socket.get('http://localhost:9092', function gotResponse(data, jwRes) {
+          console.log('Server responded with status code ' + jwRes.statusCode + ' and data: ', data);
+        });
       var data = await $.get("/api?request=dispositifs");
       /*.then((data) =>    {
         document.getElementById('entity-info-data').innerHTML = data;
@@ -43,6 +47,5 @@ parasails.registerPage('homepage', {
       var engine = TRAVISO.getEngineInstance(instanceConfig);
       pixiRoot.stage.addChild(engine);
     }
-
   }
 });

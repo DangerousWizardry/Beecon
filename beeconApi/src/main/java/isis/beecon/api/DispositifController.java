@@ -7,10 +7,12 @@ package isis.beecon.api;
 
 import isis.beecon.dao.DispositifDAO;
 import isis.beecon.models.Dispositif;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,14 +27,10 @@ public class DispositifController {
     DispositifDAO dispositifDAO;
 	
     @RequestMapping(value = "",
-            params = {"short"})
+            params = {"time"})
     @ResponseBody
-	public List<Dispositif> getAllDispositifShort(){
-		List<Dispositif> listeDispositifs = dispositifDAO.findAll();
-		listeDispositifs.forEach((dispositif ->{
-			dispositif.getPosition();
-		}));
-		return listeDispositifs;
+	public List<Dispositif> getAllDispositifShort(@RequestParam String time){
+		return dispositifDAO.findByPosition_TimestampAfter(new Date(Long.decode(time)));
 	}
 	@RequestMapping(value = "")
     @ResponseBody

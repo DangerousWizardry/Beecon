@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.function.Consumer;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
@@ -91,5 +92,15 @@ public class GeneratorController {
 		userDAO.save(user1);
 		userDAO.save(user2);
 
+	}
+	
+	@GetMapping("/addRandomPosition")
+	public void addRandomPosition(){
+		dispositifDAO.findAll().forEach(new Consumer<Dispositif>() {
+			@Override
+			public void accept(Dispositif dispositif) {
+				dispositif.getPosition().add(new Position(new Date(), 25, beaconsDAO.findAll().get(0), dispositif));
+			}
+		});
 	}
 }
