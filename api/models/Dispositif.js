@@ -35,6 +35,7 @@ module.exports = {
     },
     positions:{
       collection: 'position',
+      via: 'owner'
     }
   },
 

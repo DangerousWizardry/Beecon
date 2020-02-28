@@ -99,7 +99,8 @@ public class GeneratorController {
 		dispositifDAO.findAll().forEach(new Consumer<Dispositif>() {
 			@Override
 			public void accept(Dispositif dispositif) {
-				dispositif.getPosition().add(new Position(new Date(), 25, beaconsDAO.findAll().get(0), dispositif));
+				positionDAO.save(new Position(new Date(), 25, beaconsDAO.findAll().get(0), dispositif));
+				System.out.println(".accept()");
 			}
 		});
 	}

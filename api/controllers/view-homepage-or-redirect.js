@@ -30,9 +30,9 @@ module.exports = {
       throw {redirect:'/welcome'};
     }
     else{
-      var promise = await sails.helpers.apiQuery("/dispositifs");
+      var promise = await Dispositif.find().populate('positions');
         return  {
-          data : JSON.parse(promise)
+          data : promise
         };
     }
 

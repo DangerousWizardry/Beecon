@@ -49,7 +49,7 @@ module.exports = {
         throw 'apiFailed';
       }
       else {
-        sails.log.info(body);
+        //sails.log.info(body);
         return exits.success(body);
       }
     });

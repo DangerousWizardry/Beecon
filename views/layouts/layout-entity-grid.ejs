@@ -1,6 +1,7 @@
 <% 
 function renderDurationName(timestamp) {
-	var timeout = + new Date()-timestamp;
+	console.log(new Date(timestamp+7200000));
+	var timeout = + new Date()-new Date(timestamp+7200000);
  	if(timeout<10000){
  		return "Il y a quelques secondes";
  	}
@@ -16,7 +17,7 @@ function renderDurationName(timestamp) {
   <img src="/images/medic.png" alt="">
   <div class="entity-info">
     <span class="display-name"><%= entity.entityDisplayName; %></span>
-    <span class="last-received">Dernière reception <%= renderDurationName(entity.position[0].timestamp); %></span>
+    <span class="last-received">Dernière reception <%= renderDurationName(entity.positions[0].timestamp); %></span>
   </div>
   <i class="fa fa-2x fa-signal green"></i>
 </div>

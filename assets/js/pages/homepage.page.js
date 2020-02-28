@@ -13,6 +13,9 @@ parasails.registerPage('homepage', {
   },
   mounted: async function(){
     this._initMap();
+    io.socket.on('positionUpdated', function onServerSentEvent (msg) {
+      alert("new position available");
+    });
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
@@ -20,12 +23,6 @@ parasails.registerPage('homepage', {
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
     clickEntity: async function() {
-      io.socket.on('http://localhost:9092', function gotHelloMessage (data) {
-        console.log('User alert!', data);
-      });
-        io.socket.get('http://localhost:9092', function gotResponse(data, jwRes) {
-          console.log('Server responded with status code ' + jwRes.statusCode + ' and data: ', data);
-        });
       var data = await $.get("/api?request=dispositifs");
       /*.then((data) =>    {
         document.getElementById('entity-info-data').innerHTML = data;
