@@ -19,8 +19,6 @@ module.exports = {
 
 
   fn: async function () {
-
+    return {entities : await Dispositif.find()};
   }
-
-
 };
