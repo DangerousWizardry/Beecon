@@ -93,12 +93,12 @@
       // ... Any other app-specific setup code that needs to run on lift,
       // even in production, goes here ...
      async function initializeDynamicDatabase(){
-      sails.log.info(`============================Clear temp database data============================`);
+      sails.log.info(`========================Clear temp database data=======================`);
       await Dispositif.destroy({});
       await Position.destroy({});
-      sails.log.info(`=======================Databased cleared and ready to work=======================`);
+      sails.log.info(`==================Databased cleared and ready to work==================`);
       fetchPosition(false);
-      setInterval(fetchPosition,10000);
+      setInterval(fetchPosition,2000);
     }
 
       var requestify = require('requestify');
@@ -106,10 +106,9 @@
       async function fetchPosition(isUpdate=true){
           if (isUpdate) {
               console.log('http://127.0.0.1:4910/dispositifs/?time='+dataLastUpdatedAt);
-              requestify.get('http://127.0.0.1:4910/dispositifs/?time='+dataLastUpdatedAt).then((response) => {
+              requestify.get('http://127.0.0.1:4910/dispositifs/?time='+dataLastUpdatedAt).then(async (response) => {
                   response.getBody();
                   let data = JSON.parse(response.body);
-                  if (data.length>0) sails.sockets.blast("positionUpdated", true);
                   data.forEach(async (item,index) => {
                       let dispositifToUpdate = await Dispositif.findOne({
                           entityId : item.entityId
@@ -133,7 +132,11 @@
  
                       }
                   });
-                  dataLastUpdatedAt = Date.now();
+                  if (data.length>0) {
+                      let data = await Dispositif.find().populate('positions');
+                      sails.sockets.blast("positionUpdated", data);
+                      dataLastUpdatedAt = Date.now();
+                   }
               });
           }
           else{

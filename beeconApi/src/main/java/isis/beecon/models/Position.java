@@ -21,7 +21,7 @@ import javax.persistence.ManyToOne;
 
 
 @Entity
-public class Position implements Serializable{
+public class Position implements Serializable,Comparable{
     
     @Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -85,6 +85,15 @@ public class Position implements Serializable{
 
 	public void setDispositif(Dispositif dispositif) {
 		this.dispositif = dispositif;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		if(o.getClass()==this.getClass()){
+			Position p = (Position) o;
+			return this.idPosition - p.getIdPosition();
+		}
+		return 0;
 	}
 	
 

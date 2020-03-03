@@ -7,6 +7,7 @@ package isis.beecon.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.Set;
+import java.util.TreeSet;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -38,6 +39,7 @@ public class Dispositif{
 		this.entityFullName = entityFullName;
 		this.entityMacAddress = entityMacAddress;
 		this.entityRegistered = entityRegistered;
+		this.position = new TreeSet<Position>();
 	}
 
 	public Dispositif(){}
@@ -86,7 +88,7 @@ public class Dispositif{
 		return position;
 	}
 
-	public void setPosition(Set<Position> position) {
+	public void setPosition(TreeSet<Position> position) {
 		this.position = position;
 	}
 

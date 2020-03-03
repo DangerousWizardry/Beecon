@@ -12,7 +12,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeSet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.TypedSort;
+import org.springframework.data.querydsl.QSort;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,10 +36,11 @@ public class DispositifController {
             params = {"time"})
     @ResponseBody
 	public List<Dispositif> getAllDispositifShort(@RequestParam String time){
-		List<Dispositif> dispositifs = dispositifDAO.findByPosition_TimestampAfter(new Date(Long.decode(time)));
+		Sort sort = Sort.by("position_idPosition").ascending().and(Sort.by("entityId").ascending());
+		List<Dispositif> dispositifs = dispositifDAO.findByPosition_TimestampAfter(new Date(Long.decode(time)),sort);
 		System.out.println(dispositifs.size());
 		dispositifs.forEach((d) ->{
-			HashSet hs = new HashSet<Position>();
+			TreeSet hs = new TreeSet<Position>();
 			Date requestedDate = new Date(Long.decode(time));
 			d.getPosition().forEach((p)->{
 				if(p.getTimestamp().after(requestedDate)){
@@ -51,6 +56,11 @@ public class DispositifController {
 	@RequestMapping(value = "")
     @ResponseBody
 	public List<Dispositif> getAllDispositif(){
-		return dispositifDAO.findAll();
+		List<Dispositif> dispositifs = dispositifDAO.findAll();
+		dispositifs.forEach((d) ->{
+			TreeSet hs = new TreeSet<Position>(d.getPosition());
+			d.setPosition(hs);
+		});
+		return dispositifs;
 	}
 }

@@ -7,6 +7,7 @@ package isis.beecon.dao;
 import isis.beecon.models.Dispositif;
 import java.util.Date;
 import java.util.List;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +18,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DispositifDAO extends JpaRepository<Dispositif,Long>{
 	
-	public List<Dispositif> findByPosition_TimestampAfter(Date d);
+	public List<Dispositif> findByPosition_TimestampAfter(Date d,Sort t);
 	
 }

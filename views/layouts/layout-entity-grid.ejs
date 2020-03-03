@@ -1,23 +1,8 @@
-<% 
-function renderDurationName(timestamp) {
-	console.log(new Date(timestamp+7200000));
-	var timeout = + new Date()-new Date(timestamp+7200000);
- 	if(timeout<10000){
- 		return "Il y a quelques secondes";
- 	}
- 	else if(timeout>60000 && timeout<3600000){
- 		return "Il y a "+ Math.floor(timeout/60000)+ " minutes";
- 	}
- 	else{
- 		return "Il y a plus d'une heure";
- 	}
- } 
- %>
-<div class="entity" @click="clickEntity()">
+<div class="entity" @click="clickEntity()" v-for="entity in entities">
   <img src="/images/medic.png" alt="">
   <div class="entity-info">
-    <span class="display-name"><%= entity.entityDisplayName; %></span>
-    <span class="last-received">Dernière reception <%= renderDurationName(entity.positions[0].timestamp); %></span>
+    <span class="display-name">{{entity.entityDisplayName}}</span>
+    <span class="last-received">Dernière reception {{ renderDurationName(entity.positions[entity.positions.length -1].timestamp) }}</span>
   </div>
-  <i class="fa fa-2x fa-signal green"></i>
+  <i class="fa fa-2x fa-signal" :class="renderSignal(entity.positions[entity.positions.length -1].timestamp)"></i>
 </div>
