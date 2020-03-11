@@ -1,18 +1,19 @@
-
-<center>
-	<h1><span class="purple">Entity</span></h1>
-</center>
-<div id="entitiesproperties">
+<div id="entitylist" v-cloak>
+<h1 class="purple">Entity</h1>
+<div class="entitiesproperties">
 	<h2>Known Entity</h2>
 		<div class="contenu">
-			<%= entities[0].entityDisplayName; %>
-			<div> ID Display Name MAC <i class="fa fa-2x fa-signal green"></i></div> 
+			<% entities.forEach(function(entity){ %>
+				<%- include('../layouts/layout-entity-details.ejs', {entity: entity}); %>
+			<% }); %>
 		</div>
 </div>
-<div id="entityproperties">
+<div class="entitiesproperties">
 	<h2>Unknow Entity</h2>
 		<div class="contenu">
-			<div> ID Display Name MAC <i class="fa fa-2x fa-signal green"></i></div> 
+			<% entities.forEach(function(entity){ %>
+				<%- include('../layouts/layout-entity-details.ejs', {entity: entity}); %>
+			<% }); %>
 		</div>
 </div>
-	
+</div>
