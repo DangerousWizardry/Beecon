@@ -1,9 +1,17 @@
+var entityInfoComponent = {
+  props:['selectedEntity'],
+  template: '<div v-if="selectedEntity" class="row"><div class="col1"><div class="label"><b>Entity Name</b><b>Entity Id</b><b>Full Name</b><b>Mac Adress</b></div><div class="value"><span>{{selectedEntity.entityDisplayName}}</span><span>{{selectedEntity.entityId}}</span><span>{{selectedEntity.entityFullName}}</span><span>{{selectedEntity.entityMacAddress}}</span></div></div><div class="col2"><div class="last-received"></div><div class="progress"></div></div></div>'
+};
 parasails.registerPage('homepage', {
   //  ╦╔╗╔╦╔╦╗╦╔═╗╦    ╔═╗╔╦╗╔═╗╔╦╗╔═╗
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data : {
-    entities:[]
+    entities:[],
+    selectedEntity:[]
+  },
+  components : {
+    'entity-info' : entityInfoComponent
   },
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
   //  ║  ║╠╣ ║╣ ║  ╚╦╝║  ║  ║╣
@@ -14,7 +22,6 @@ parasails.registerPage('homepage', {
     this.entities = this.apiEntityList;
   },
   mounted: async function(){
-    console.log(this.entities);
     this._initMap();
     var _myVue = this; 
     io.socket.on('positionUpdated', function onServerSentEvent (msg) {
@@ -30,17 +37,14 @@ parasails.registerPage('homepage', {
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
-    clickEntity: async function() {
-      var data = await $.get("/api?request=dispositifs");
-      /*.then((data) =>    {
-        document.getElementById('entity-info-data').innerHTML = data;
-        console.log(data);
-      });*/
-      
+
+    clickEntity: function(entity) {
+      this.selectedEntity = entity;
+      console.log(this.selectedEntity);
+
     },
     renderDurationName: function(timestamp) {
       var timeout = + new Date()-new Date(timestamp);
-      console.log(new Date(timestamp));
        if(timeout<10000){
          return "Il y a quelques secondes";
        }
