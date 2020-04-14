@@ -1,26 +1,20 @@
-var entityInfoComponent = {
-  props:['selectedEntity'],
-  template: '<div class="row"><div class="col1"><div class="label"><b>Entity Name</b><b>Entity Id</b><b>Full Name</b><b>Mac Adress</b></div><div class="value"><span>{{selectedEntity.entityDisplayName}}</span><span>{{selectedEntity.entityId}}</span><span>{{selectedEntity.entityFullName}}</span><span>{{selectedEntity.entityMacAddress}}</span></div></div><div class="col2"><div class="last-received">{{ new Date(selectedEntity.positions[selectedEntity.positions.length -1].timestamp) }}</div><div class="progress"></div></div></div>'
-};
 parasails.registerPage('homepage', {
   //  ╦╔╗╔╦╔╦╗╦╔═╗╦    ╔═╗╔╦╗╔═╗╔╦╗╔═╗
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data : {
-    entities:[],
-    selectedEntity:new Array()
-  },
-  components : {
-    'entity-info' : entityInfoComponent
-  },
+      entities:[],
+      selectedEntity:false
+    },
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
   //  ║  ║╠╣ ║╣ ║  ╚╦╝║  ║  ║╣
   //  ╩═╝╩╚  ╚═╝╚═╝ ╩ ╚═╝╩═╝╚═╝
   beforeMount: function() {
     // Attach any initial data from the server.
     _.extend(this, SAILS_LOCALS);
+    //Force appending selectedEntity to the global vue
+    this.selectedEntity = [];
     this.entities = this.apiEntityList;
-    console.log(this.selectedEntity);
   },
   mounted: async function(){
     this._initMap();
@@ -29,8 +23,9 @@ parasails.registerPage('homepage', {
       _myVue.entities = msg;
     });
     function _keepWatchesOnTime(){
-      console.log("o'clock !");
+      if (typeof _myVue.entities[0].positions[_myVue.entities[0].positions.length-1] != 'undefined') {
         _myVue.entities[0].positions[_myVue.entities[0].positions.length-1].timestamp = _myVue.entities[0].positions[_myVue.entities[0].positions.length -1].timestamp+1;
+      }
     }
     setInterval(_keepWatchesOnTime,5000);
   },

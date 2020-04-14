@@ -9,7 +9,7 @@
       </div>
       <div id="entity-info">
         <h1><span class="purple">Entity</span> Info</h1>
-        <entity-info v-bind:selected-entity="selectedEntity" v-if="typeof this.selectedEntity.positions !== undefined"></entity-info>
+        <entity-info v-if="typeof selectedEntity.entityId !== 'undefined'" v-bind:selected="selectedEntity"></entity-info>
       </div>
     </div>
     <div id="entities">
@@ -20,4 +20,4 @@
     </div>
   </div>
 </div>
-<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser()%>
+<%- /*   Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser()%>
