@@ -36,7 +36,6 @@ parasails.registerPage('homepage', {
 
     clickEntity: function(entity) {
       this.selectedEntity = entity;
-      console.log(this.selectedEntity);
 
     },
     renderDurationName: function(timestamp) {
