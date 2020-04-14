@@ -30,9 +30,26 @@ module.exports = {
       throw {redirect:'/welcome'};
     }
     else{
-      var promise = await Dispositif.find().populate('positions');
+      var nestedPop = require('nested-pop');
+      var entityList = await Dispositif.find().populate('positions',{sort: 'timestamp DESC'}).then(
+        function(dispositifs) {
+          return nestedPop(dispositifs, {
+              positions: {
+                  as: 'position',
+                  populate: [
+                      'beacon'
+                  ]
+              } 
+          }).then(function(dispositifs) {
+              return dispositifs
+          }).catch(function(err) {
+              throw err;
+        });
+      }).catch(function(err) {
+        throw err;
+      });
         return  {
-          apiEntityList : promise
+          apiEntityList : entityList
         };
     }
 

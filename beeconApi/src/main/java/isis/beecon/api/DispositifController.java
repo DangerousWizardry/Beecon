@@ -44,6 +44,7 @@ public class DispositifController {
 			Date requestedDate = new Date(Long.decode(time));
 			d.getPosition().forEach((p)->{
 				if(p.getTimestamp().after(requestedDate)){
+					p.getBeacon();
 					hs.add(p);
 				}
 			});
@@ -58,8 +59,10 @@ public class DispositifController {
 	public List<Dispositif> getAllDispositif(){
 		List<Dispositif> dispositifs = dispositifDAO.findAll();
 		dispositifs.forEach((d) ->{
-			TreeSet hs = new TreeSet<Position>(d.getPosition());
-			d.setPosition(hs);
+			d.getPosition().forEach((p)->{
+				p.getBeacon();
+			});
+			
 		});
 		return dispositifs;
 	}

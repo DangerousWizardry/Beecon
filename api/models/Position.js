@@ -35,7 +35,10 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
     // n/a
-    owner: {
+    beacon:{
+      model: 'beacon',
+    },
+    dispositif: {
       model: 'dispositif'
     }
   },

@@ -9,6 +9,7 @@
     "@sailshq/lodash": "^3.10.3",
     "@sailshq/socket.io-redis": "^5.2.0",
     "ejs-lint": "^1.0.1",
+    "nested-pop": "^0.1.4",
     "request": "^2.88.0",
     "requestify": "^0.2.5",
     "sails": "^1.2.3",

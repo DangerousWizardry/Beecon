@@ -1,9 +1,9 @@
-<div id="entitylist" v-cloak>
+<div id="entitylist">
 <h1 class="purple">Entity</h1>
 <div class="entitiesproperties">
 	<h2>Known Entity</h2>
 		<div class="contenu">
-			<% entities.forEach(function(entity){ %>
+			<% knownEntities.forEach(function(entity){ %>
 				<%- include('../layouts/layout-entity-details.ejs', {entity: entity}); %>
 			<% }); %>
 		</div>
@@ -11,7 +11,7 @@
 <div class="entitiesproperties">
 	<h2>Unknow Entity</h2>
 		<div class="contenu">
-			<% entities.forEach(function(entity){ %>
+			<% unknownEntities.forEach(function(entity){ %>
 				<%- include('../layouts/layout-entity-details.ejs', {entity: entity}); %>
 			<% }); %>
 		</div>
