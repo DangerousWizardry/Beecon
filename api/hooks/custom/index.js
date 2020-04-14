@@ -115,7 +115,13 @@
                       });
                       if (dispositifToUpdate) {
                           item.position.forEach( async (position,index) => {
-                              position.owner = dispositifToUpdate.id;
+                              position.dispositif = dispositifToUpdate.id;
+                              try{
+                                await Beacon.create(Object.assign({}, position.beacon)).fetch(); 
+                              }catch(e){console.log(e)}
+                              finally{
+                                position.beacon = position.beacon.id;
+                              }
                               await Position.create(position);
                               console.log("write position"+position.idPosition);
                           });
@@ -124,9 +130,15 @@
                           let dispositif = await Dispositif.create(Object.assign({}, item)).fetch();
                           console.log("write entity "+item.entityId);
                           item.position.forEach( async (position,index) => {
-                              position.owner = +dispositif.id;
-                              console.log("write position"+position.idPosition);
+                              position.dispositif = +dispositif.id;
+                              try{
+                                await Beacon.create(Object.assign({}, position.beacon)).fetch(); 
+                              }catch(e){console.log(e)}
+                              finally{
+                                position.beacon = position.beacon.id;
+                              }
                               await Position.create(position);
+                              console.log("write position"+position.idPosition);
                           });
                           
  
@@ -149,19 +161,32 @@
                       });
                       if (dispositifToUpdate) {
                           item.position.forEach( async (position,index) => {
-                              position.owner = dispositifToUpdate.id;
+                              position.dispositif = dispositifToUpdate.id;
+                              try{
+                                await Beacon.create(Object.assign({}, position.beacon)).fetch(); 
+                              }catch(e){console.log(e)}
+                              finally{
+                                position.beacon = position.beacon.id;
+                              }
                               await Position.create(position);
                           });
                       }
                       else{
                           let dispositif = await Dispositif.create(Object.assign({}, item)).fetch();
-                          console.log("write entity "+item.entityId);
                           item.position.forEach( async (position,index) => {
-                              position.owner = +dispositif.id;
-                              console.log("write position"+position.idPosition)
-                              await Position.create(position);
+                              position.dispositif = +dispositif.id;
+                              try{
+                                await Beacon.create(Object.assign({}, position.beacon)).fetch(); 
+                              }catch(e){}
+                              finally{
+                                position.beacon = position.beacon.id;
+                              }
+                              
+                              let positionCreated = await Position.create(position).fetch();
+                              console.log("write position "+positionCreated.beacon)
                           });
-                          
+                           let dispositifCreated = await Dispositif.findOne({entityId : item.entityId}).populate('positions');
+                          console.log("write entity "+dispositifCreated.positions);
  
                       }
                   });
