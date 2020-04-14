@@ -9,11 +9,11 @@
       </div>
       <div id="entity-info">
         <h1><span class="purple">Entity</span> Info</h1>
-        <entity-info v-bind:selected-entity="selectedEntity"></entity-info>
+        <entity-info v-bind:selected-entity="selectedEntity" v-if="typeof this.selectedEntity.positions !== undefined"></entity-info>
       </div>
     </div>
     <div id="entities">
-      <h1><span class="green">Active</span> Entities <small>(X)</small></h1>
+      <h1><span class="green">Active</span> Entities <small>({{entities.length}})</small></h1>
       <div class="entity-container">
       <%- include('../layouts/layout-entity-grid.ejs'); %>
       </div>
