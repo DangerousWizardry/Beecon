@@ -1,7 +1,7 @@
 /**
- * Dispositif.js
+ * Beacon.js
  *
- * An entity who navigate throught the map
+ * A beacon
  */
 
 module.exports = {
@@ -11,37 +11,28 @@ module.exports = {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
-
-    entityId: {
+    id: {
       type: 'number',
       required: true,
       unique: true
     },
-    entityDisplayName: {
+    addMac: {
       type: 'string',
       required: true
     },
-    entityFullName: {
+    xEmplacement: {
+      type: 'number',
+      required: true
+    },
+    yEmplacement: {
+      type: 'number',
+      required: true
+    },
+    nom:{
       type: 'string',
       required: true
-    },
-    entityMacAddress: {
-      type: 'string',
-      required: true
-    },
-    entityRegistered: {
-      type: 'boolean',
-      required: true
-    },
-    positions:{
-      collection: 'position',
-      via:'dispositif'
     }
   },
 
 
-
 };
-/*
-
-*/

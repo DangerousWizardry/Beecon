@@ -30,9 +30,8 @@ public class Position implements Serializable,Comparable{
     Date timestamp;
     float attenuation;
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn
-	@JsonBackReference
 	Beacon beacon;
 		
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
