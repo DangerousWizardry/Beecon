@@ -17,23 +17,12 @@ parasails.registerComponent('entity-info', {
   //  ╔═╗╦═╗╔═╗╔═╗╔═╗
   //  ╠═╝╠╦╝║ ║╠═╝╚═╗
   //  ╩  ╩╚═╚═╝╩  ╚═╝
-   props:
-   {
-     entityDisplayName : String,
-     entityId: Number,
-     entityFullName : String,
-     entityMacAddress : String,
-     positions: Array,
-     entityRegistered: Boolean
-   },
+   props:['selected'],
 
    watch:{
-      entityId:{
-        immediate: true, 
-        handler(val) {
-          this.scanAttributes();
-        }
-      }
+     selected:function (val) {
+      this.lastReceived = new Date(val.positions[0].timestamp).toLocaleString("fr-FR");
+    }
    },
   //  ╦╔╗╔╦╔╦╗╦╔═╗╦    ╔═╗╔╦╗╔═╗╔╦╗╔═╗
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
@@ -43,10 +32,10 @@ parasails.registerComponent('entity-info', {
       <div class="col1">
         <div class="label"><b>Entity Name</b><b>Entity Id</b><b>Full Name</b><b>Mac Adress</b></div>
         <div class="value">
-          <span>{{entityDisplayName}}</span>
-          <span>{{entityId}}</span>
-          <span>{{entityFullName}}</span>
-          <span>{{entityMacAddress}}</span>
+          <span>{{selected.entityDisplayName}}</span>
+          <span>{{selected.entityId}}</span>
+          <span>{{selected.entityFullName}}</span>
+          <span>{{selected.entityMacAddress}}</span>
         </div>
       </div>
       <div class="col2">
@@ -67,6 +56,7 @@ parasails.registerComponent('entity-info', {
   },
   mounted: async function(){
     //Keep entity-info up-to-date
+    setInterval(this.scanAttributes,2000);
   },
   beforeDestroy: function() {
     //…
@@ -77,11 +67,10 @@ parasails.registerComponent('entity-info', {
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
     scanAttributes:function(){
-      console.log(typeof this.positions != 'undefined');
-      if (typeof this.positions != 'undefined') {
-        this.lastReceived = new Date(this.positions[0].timestamp).toLocaleString("fr-FR");
-        var positions = this.positions;
-        let reliablePosition = this.positions.filter( position => {
+      if (this.lastReceived!=null && typeof this.selected.positions != 'undefined') {
+        this.lastReceived = new Date(this.selected.positions[0].timestamp).toLocaleString("fr-FR");
+        var positions = this.selected.positions;
+        let reliablePosition = this.selected.positions.filter( position => {
           return positions[0].timestamp-10000 < position.timestamp
         });
         console.log(reliablePosition);
@@ -89,6 +78,7 @@ parasails.registerComponent('entity-info', {
         for(position of reliablePosition){
           this.beaconsHtml += '<span>'+position.beacon.nom+'</span><img src="/images/network/network-'+ this._evalSignalStrength(position.attenuation) +'.png">';
         }
+        console.log(this.beaconsHtml);
       }
     },
     _evalSignalStrength:function(signal){
