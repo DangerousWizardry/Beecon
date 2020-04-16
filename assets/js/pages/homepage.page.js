@@ -24,7 +24,7 @@ parasails.registerPage('homepage', {
     });
     function _keepWatchesOnTime(){
       if (typeof _myVue.entities[0].positions[_myVue.entities[0].positions.length-1] != 'undefined') {
-        _myVue.entities[0].positions[_myVue.entities[0].positions.length-1].timestamp = _myVue.entities[0].positions[_myVue.entities[0].positions.length -1].timestamp+1;
+        _myVue.entities[0].positions[0].timestamp = _myVue.entities[0].positions[0].timestamp+1;
       }
     }
     setInterval(_keepWatchesOnTime,5000);

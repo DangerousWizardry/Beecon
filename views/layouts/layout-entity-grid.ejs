@@ -2,7 +2,7 @@
   <img src="/images/medic.png" alt="">
   <div class="entity-info">
     <span class="display-name">{{entity.entityDisplayName}}</span>
-    <span class="last-received" v-if="typeof entity.positions[0] != 'undefined'">Dernière reception {{ renderDurationName(entity.positions[entity.positions.length -1].timestamp) }}</span>
+    <span class="last-received" v-if="typeof entity.positions[0] != 'undefined'">Dernière reception {{ renderDurationName(entity.positions[0].timestamp) }}</span>
   </div>
-  <i class="fa fa-2x fa-signal" v-if="typeof entity.positions[0] != 'undefined'" :class="renderSignal(entity.positions[entity.positions.length -1].timestamp)"></i>
+  <i class="fa fa-2x fa-signal" v-if="typeof entity.positions[0] != 'undefined'" :class="renderSignal(entity.positions[0].timestamp)"></i>
 </div>
