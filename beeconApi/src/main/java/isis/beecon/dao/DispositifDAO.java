@@ -19,5 +19,6 @@ import org.springframework.stereotype.Repository;
 public interface DispositifDAO extends JpaRepository<Dispositif,Long>{
 	
 	public List<Dispositif> findByPosition_TimestampAfter(Date d,Sort t);
+	public Dispositif findByEntityMacAddress(String macAddress);
 	
 }

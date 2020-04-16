@@ -59,8 +59,8 @@ public class GeneratorController {
 		/*
 		Generating dummy beacon
 		 */
-		Beacon beacon1 = new Beacon("1234", 5, 5, "Beacon1", salle1);
-		Beacon beacon2 = new Beacon("1234", 15, 15, "Beacon2", salle2);
+		Beacon beacon1 = new Beacon("macadressbeacon1", 5, 5, "Beacon1", salle1);
+		Beacon beacon2 = new Beacon("macadressbeacon2", 15, 15, "Beacon2", salle2);
 
 		beacon1 = beaconsDAO.save(beacon1);
 		beacon2 = beaconsDAO.save(beacon2);
@@ -68,8 +68,8 @@ public class GeneratorController {
 		/*
 		Generating dummy devices
 		 */
-		Dispositif dispositif1 = new Dispositif("smartphone1", "fullname1", "macadress", true);
-		Dispositif dispositif2 = new Dispositif("smartphone2", "fullname2", "macadress", true);
+		Dispositif dispositif1 = new Dispositif("smartphone1", "fullname1", "macadressdisp1", true);
+		Dispositif dispositif2 = new Dispositif("smartphone2", "fullname2", "macadressdisp2", true);
 
 		dispositif1 = dispositifDAO.save(dispositif1);
 		dispositif2 = dispositifDAO.save(dispositif2);

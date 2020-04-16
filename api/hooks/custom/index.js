@@ -117,12 +117,14 @@
                           item.position.forEach( async (position,index) => {
                               position.dispositif = dispositifToUpdate.id;
                               try{
-                                await Beacon.create(Object.assign({}, position.beacon)).fetch(); 
-                              }catch(e){console.log(e)}
+                                await Beacon.findOrCreate({id:position.beacon.id}, position.beacon); 
+                              }catch(e){
+                                console.log(e)
+                              }
                               finally{
                                 position.beacon = position.beacon.id;
                               }
-                              await Position.create(position);
+                              await Position.findOrCreate({idPosition:position.idPosition},position);
                               console.log("write position"+position.idPosition);
                           });
                       }
@@ -132,12 +134,12 @@
                           item.position.forEach( async (position,index) => {
                               position.dispositif = +dispositif.id;
                               try{
-                                await Beacon.create(Object.assign({}, position.beacon)).fetch(); 
+                                await Beacon.findOrCreate({id:position.beacon.id}, position.beacon); 
                               }catch(e){console.log(e)}
                               finally{
                                 position.beacon = position.beacon.id;
                               }
-                              await Position.create(position);
+                              await Position.findOrCreate({idPosition:position.idPosition},position);
                               console.log("write position"+position.idPosition);
                           });
                           
@@ -145,8 +147,25 @@
                       }
                   });
                   if (data.length>0) {
-                      let data = await Dispositif.find().populate('positions');
-                      sails.sockets.blast("positionUpdated", data);
+                      var nestedPop = require('nested-pop');
+                      var newData = await Dispositif.find().populate('positions',{sort: 'timestamp DESC'}).then(
+                        function(dispositifs) {
+                          return nestedPop(dispositifs, {
+                              positions: {
+                                  as: 'position',
+                                  populate: [
+                                      'beacon'
+                                  ]
+                              } 
+                          }).then(function(dispositifs) {
+                              return dispositifs
+                          }).catch(function(err) {
+                              throw err;
+                        });
+                      }).catch(function(err) {
+                        throw err;
+                      });
+                      sails.sockets.blast("positionUpdated", newData);
                       dataLastUpdatedAt = Date.now();
                    }
               });

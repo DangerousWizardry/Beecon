@@ -14,4 +14,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface BeaconDAO extends JpaRepository<Beacon,Long>{
+	public Beacon findByAddMac(String macAddress);
 }

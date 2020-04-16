@@ -25,36 +25,27 @@ module.exports = {
 
 
   fn: async function () {
-
-    if (this.req.me) {
-      throw {redirect:'/welcome'};
-    }
-    else{
-      var nestedPop = require('nested-pop');
-      var entityList = await Dispositif.find().populate('positions',{sort: 'timestamp DESC'}).then(
-        function(dispositifs) {
-          return nestedPop(dispositifs, {
-              positions: {
-                  as: 'position',
-                  populate: [
-                      'beacon'
-                  ]
-              } 
-          }).then(function(dispositifs) {
-              return dispositifs
-          }).catch(function(err) {
-              throw err;
-        });
-      }).catch(function(err) {
-        throw err;
+    var nestedPop = require('nested-pop');
+    var entityList = await Dispositif.find().populate('positions',{sort: 'timestamp DESC'}).then(
+      function(dispositifs) {
+        return nestedPop(dispositifs, {
+            positions: {
+                as: 'position',
+                populate: [
+                    'beacon'
+                ]
+            } 
+        }).then(function(dispositifs) {
+            return dispositifs
+        }).catch(function(err) {
+            throw err;
       });
-        return  {
-          apiEntityList : entityList
-        };
-    }
-
-    return {};
-
+    }).catch(function(err) {
+      throw err;
+    });
+      return  {
+        apiEntityList : entityList
+      };
   }
 
 
