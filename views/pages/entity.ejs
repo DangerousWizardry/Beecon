@@ -16,4 +16,23 @@
 			<% }); %>
 		</div>
 </div>
+
+<div>
+	<form>
+		<label for="theunknowentities">Liste des entités inconnues : </label>
+		<select id="liste"></select>
+		<input type="button" id="ajout" value="Enregistrer">
+	</form>
+	<script>
+		var select = document.getElementById("liste");
+		var option = select.getElementsByTagName('option');
+		unknownEntities.forEach(
+		select.options[selectajout.length]=new Option (entity.entityDisplayName,entity.entityDisplayName))
+		document.getElementById("ajout").addEventListener("click",enregistrer);
+		function enregistrer(){
+			let entity = document.getElementById("liste").options[choice].value;
+			entity.entityRegistered= true;
+		}
+	</script>
+</div>
 </div>
