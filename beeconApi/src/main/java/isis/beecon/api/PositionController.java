@@ -48,10 +48,19 @@ public class PositionController {
 	
 	@PostMapping(value = "", consumes = "application/json")
 	public void postNewDispositif(@RequestBody PositionPostDTO[] listePositionDTO){
+                System.out.println("Number of devices sent: " + listePositionDTO.length);
+                for(PositionPostDTO p : listePositionDTO) {
+                    System.out.println("{\n addresse : " + p.getAddresseMacDispositif() + 
+                                        "\n addresse beacon : " + p.getAddresseMacBalise() +
+                                        "\n timestamp : " + p.getTimestamp() +
+                                        "\n attenuation: " + p.getAttenuation() + "dB\n}");
+                }
+                System.out.println("}");
 		for(PositionPostDTO positionDTO : listePositionDTO){
 			Beacon b = beaconDAO.findByAddMac(positionDTO.getAddresseMacBalise());
 			System.out.println(b);
-			if(b!=null){
+			if(b!=null){ 
+                                      
 				Dispositif d = dispositifDAO.findByEntityMacAddress(positionDTO.getAddresseMacDispositif());
 				System.out.println(d);
 				Position p;
