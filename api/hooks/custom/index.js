@@ -5,14 +5,14 @@
 
  module.exports = function defineCustomHook(sails) {
 
-     return {
+   return {
 
     /**
      * Runs when a Sails app loads/lifts.
      */
      initialize: async function () {
 
-         sails.log.info('Initializing project hook... (`api/hooks/custom/`)');
+       sails.log.info('Initializing project hook... (`api/hooks/custom/`)');
 
       // Check Stripe/Mailgun configuration (for billing and emails).
       var IMPORTANT_STRIPE_CONFIG = ['stripeSecret', 'stripePublishableKey'];
@@ -22,51 +22,51 @@
 
       if (isMissingStripeConfig || isMissingMailgunConfig) {
 
-          let missingFeatureText = isMissingStripeConfig && isMissingMailgunConfig ? 'billing and email' : isMissingStripeConfig ? 'billing' : 'email';
-          let suffix = '';
-          if (_.contains(['silly'], sails.config.log.level)) {
-              suffix =
-              `
-              > Tip: To exclude sensitive credentials from source control, use:
-              > • config/local.js (for local development)
-              > • environment variables (for production)
-              >
-              > If you want to check them in to source control, use:
-              > • config/custom.js  (for development)
-              > • config/env/staging.js  (for staging)
-              > • config/env/production.js  (for production)
-              >
-              > (See https://sailsjs.com/docs/concepts/configuration for help configuring Sails.)
-              `;
-          }
+        let missingFeatureText = isMissingStripeConfig && isMissingMailgunConfig ? 'billing and email' : isMissingStripeConfig ? 'billing' : 'email';
+        let suffix = '';
+        if (_.contains(['silly'], sails.config.log.level)) {
+          suffix =
+          `
+          > Tip: To exclude sensitive credentials from source control, use:
+          > • config/local.js (for local development)
+          > • environment variables (for production)
+          >
+          > If you want to check them in to source control, use:
+          > • config/custom.js  (for development)
+          > • config/env/staging.js  (for staging)
+          > • config/env/production.js  (for production)
+          >
+          > (See https://sailsjs.com/docs/concepts/configuration for help configuring Sails.)
+          `;
+        }
 
-          let problems = [];
-          if (sails.config.custom.stripeSecret === undefined) {
-              problems.push('No `sails.config.custom.stripeSecret` was configured.');
-          }
-          if (sails.config.custom.stripePublishableKey === undefined) {
-              problems.push('No `sails.config.custom.stripePublishableKey` was configured.');
-          }
-          if (sails.config.custom.mailgunSecret === undefined) {
-              problems.push('No `sails.config.custom.mailgunSecret` was configured.');
-          }
-          if (sails.config.custom.mailgunDomain === undefined) {
-              problems.push('No `sails.config.custom.mailgunDomain` was configured.');
-          }
-          if (sails.config.custom.internalEmailAddress === undefined) {
-              problems.push('No `sails.config.custom.internalEmailAddress` was configured.');
-          }
+        let problems = [];
+        if (sails.config.custom.stripeSecret === undefined) {
+          problems.push('No `sails.config.custom.stripeSecret` was configured.');
+        }
+        if (sails.config.custom.stripePublishableKey === undefined) {
+          problems.push('No `sails.config.custom.stripePublishableKey` was configured.');
+        }
+        if (sails.config.custom.mailgunSecret === undefined) {
+          problems.push('No `sails.config.custom.mailgunSecret` was configured.');
+        }
+        if (sails.config.custom.mailgunDomain === undefined) {
+          problems.push('No `sails.config.custom.mailgunDomain` was configured.');
+        }
+        if (sails.config.custom.internalEmailAddress === undefined) {
+          problems.push('No `sails.config.custom.internalEmailAddress` was configured.');
+        }
 
-          sails.log.verbose(
-              `Some optional settings have not been configured yet:
-              ---------------------------------------------------------------------
-              ${problems.join('\n')}
+        sails.log.verbose(
+          `Some optional settings have not been configured yet:
+          ---------------------------------------------------------------------
+          ${problems.join('\n')}
 
-              Until this is addressed, this app's ${missingFeatureText} features
-              will be disabled and/or hidden in the UI.
+          Until this is addressed, this app's ${missingFeatureText} features
+          will be disabled and/or hidden in the UI.
 
-              [?] If you're unsure or need advice, come by https://sailsjs.com/support
-              ---------------------------------------------------------------------${suffix}`);
+          [?] If you're unsure or need advice, come by https://sailsjs.com/support
+          ---------------------------------------------------------------------${suffix}`);
       }//ﬁ
 
       // Set an additional config keys based on whether Stripe config is available.
@@ -77,151 +77,130 @@
       // and Mailgun packs with any available credentials.
       sails.after('hook:organics:loaded', ()=>{
 
-          sails.helpers.stripe.configure({
-              secret: sails.config.custom.stripeSecret
-          });
+        sails.helpers.stripe.configure({
+          secret: sails.config.custom.stripeSecret
+        });
 
-          sails.helpers.mailgun.configure({
-              secret: sails.config.custom.mailgunSecret,
-              domain: sails.config.custom.mailgunDomain,
-              from: sails.config.custom.fromEmailAddress,
-              fromName: sails.config.custom.fromName,
-          });
+        sails.helpers.mailgun.configure({
+          secret: sails.config.custom.mailgunSecret,
+          domain: sails.config.custom.mailgunDomain,
+          from: sails.config.custom.fromEmailAddress,
+          fromName: sails.config.custom.fromName,
+        });
 
       });//_∏_
 
       // ... Any other app-specific setup code that needs to run on lift,
       // even in production, goes here ...
-     async function initializeDynamicDatabase(){
-      sails.log.info(`========================Clear temp database data=======================`);
-      await Dispositif.destroy({});
-      await Position.destroy({});
-      sails.log.info(`==================Databased cleared and ready to work==================`);
-      fetchPosition(false);
-      setInterval(fetchPosition,2000);
-    }
+      async function initializeDynamicDatabase(){
+        sails.log.info(`========================Clear temp database data=======================`);
+        await Dispositif.destroy({});
+        await Position.destroy({});
+        await Beacon.destroy({});
+        sails.log.info(`==================Databased cleared and ready to work==================`);
+        fetchPosition(false);
+        fetchBeacon();
+        setInterval(fetchPosition,2000);
+        setInterval(fetchBeacon,10000);
+      }
 
       var requestify = require('requestify');
       var dataLastUpdatedAt = Date.now();
       async function fetchPosition(isUpdate=true){
-          if (isUpdate) {
-              console.log('http://127.0.0.1:4910/dispositifs/?time='+dataLastUpdatedAt);
-              requestify.get('http://127.0.0.1:4910/dispositifs/?time='+dataLastUpdatedAt).then(async (response) => {
-                  response.getBody();
-                  let data = JSON.parse(response.body);
-                  data.forEach(async (item,index) => {
-                      let dispositifToUpdate = await Dispositif.findOne({
-                          entityId : item.entityId
-                      });
-                      if (dispositifToUpdate) {
-                          item.position.forEach( async (position,index) => {
-                              position.dispositif = dispositifToUpdate.id;
-                              try{
-                                await Beacon.findOrCreate({id:position.beacon.id}, position.beacon); 
-                              }catch(e){
-                                console.log(e)
-                              }
-                              finally{
-                                position.beacon = position.beacon.id;
-                              }
-                              await Position.findOrCreate({idPosition:position.idPosition},position);
-                              console.log("write position"+position.idPosition);
-                          });
-                      }
-                      else{
-                          let dispositif = await Dispositif.create(Object.assign({}, item)).fetch();
-                          console.log("write entity "+item.entityId);
-                          item.position.forEach( async (position,index) => {
-                              position.dispositif = +dispositif.id;
-                              try{
-                                await Beacon.findOrCreate({id:position.beacon.id}, position.beacon); 
-                              }catch(e){console.log(e)}
-                              finally{
-                                position.beacon = position.beacon.id;
-                              }
-                              await Position.findOrCreate({idPosition:position.idPosition},position);
-                              console.log("write position"+position.idPosition);
-                          });
-                          
- 
-                      }
-                  });
-                  if (data.length>0) {
-                      var nestedPop = require('nested-pop');
-                      var newData = await Dispositif.find().populate('positions',{sort: 'timestamp DESC'}).then(
-                        function(dispositifs) {
-                          return nestedPop(dispositifs, {
-                              positions: {
-                                  as: 'position',
-                                  populate: [
-                                      'beacon'
-                                  ]
-                              } 
-                          }).then(function(dispositifs) {
-                              return dispositifs
-                          }).catch(function(err) {
-                              throw err;
-                        });
-                      }).catch(function(err) {
-                        throw err;
-                      });
-                      sails.sockets.blast("positionUpdated", newData);
-                      dataLastUpdatedAt = Date.now();
-                   }
+        if (isUpdate) {
+          console.log('http://127.0.0.1:4910/dispositifs/?time='+dataLastUpdatedAt);
+          requestify.get('http://127.0.0.1:4910/dispositifs/?time='+dataLastUpdatedAt).then(async (response) => {
+            response.getBody();
+            let data = JSON.parse(response.body);
+            data.forEach(async (item,index) => {
+              let dispositifToUpdate = await Dispositif.findOne({
+                entityId : item.entityId
               });
-          }
-          else{
-              requestify.get('http://127.0.0.1:4910/dispositifs/').then((response) => {
-                  response.getBody();
-                  let data = JSON.parse(response.body);
-                  data.forEach(async (item,index) => {
-                      let dispositifToUpdate = await Dispositif.findOne({
-                          entityId : item.entityId
-                      });
-                      if (dispositifToUpdate) {
-                          item.position.forEach( async (position,index) => {
-                              position.dispositif = dispositifToUpdate.id;
-                              try{
-                                await Beacon.create(Object.assign({}, position.beacon)).fetch(); 
-                              }catch(e){console.log(e)}
-                              finally{
-                                position.beacon = position.beacon.id;
-                              }
-                              await Position.create(position);
-                          });
-                      }
-                      else{
-                          let dispositif = await Dispositif.create(Object.assign({}, item)).fetch();
-                          item.position.forEach( async (position,index) => {
-                              position.dispositif = +dispositif.id;
-                              try{
-                                await Beacon.create(Object.assign({}, position.beacon)).fetch(); 
-                              }catch(e){}
-                              finally{
-                                position.beacon = position.beacon.id;
-                              }
-                              
-                              let positionCreated = await Position.create(position).fetch();
-                              console.log("write position "+positionCreated.beacon)
-                          });
-                           let dispositifCreated = await Dispositif.findOne({entityId : item.entityId}).populate('positions');
-                          console.log("write entity "+dispositifCreated.positions);
- 
-                      }
-                  });
+              let dispositif = dispositifToUpdate?dispositifToUpdate:await Dispositif.create(Object.assign({}, item)).fetch();
+              console.log("write entity "+item.entityId);
+              item.position.forEach( async (position,index) => {
+                position.dispositif = +dispositif.id;
+                position.beacon = position.beacon.id;
+                await Position.findOrCreate({idPosition:position.idPosition},position);
+                console.log("write position"+position.idPosition);
               });
+            });
+            if (data.length>0) {
+              var nestedPop = require('nested-pop');
+              var newData = await Dispositif.find().populate('positions',{sort: 'timestamp DESC'}).then(
+                function(dispositifs) {
+                  return nestedPop(dispositifs, {
+                    positions: {
+                      as: 'position',
+                      populate: [
+                      'beacon'
+                      ]
+                    } 
+                  }).then(function(dispositifs) {
+                    return dispositifs
+                  }).catch(function(err) {
+                    throw err;
+                  });
+                }).catch(function(err) {
+                  throw err;
+                });
+                sails.sockets.blast("positionUpdated", newData);
+                dataLastUpdatedAt = Date.now();
+              }
+            });
+        }
+        else{
+          requestify.get('http://127.0.0.1:4910/dispositifs/').then((response) => {
+            response.getBody();
+            let data = JSON.parse(response.body);
+            data.forEach(async (item,index) => {
+              let dispositifToUpdate = await Dispositif.findOne({
+                entityId : item.entityId
+              });
+              let dispositif = dispositifToUpdate?dispositifToUpdate:await Dispositif.create(Object.assign({}, item)).fetch();
+              item.position.forEach( async (position,index) => {
+                position.dispositif = +dispositif.id;
+                position.beacon = position.beacon.id;
+                let positionCreated = await Position.create(position).fetch();
+                console.log("write position "+positionCreated.beacon)
+              });
+              let dispositifCreated = await Dispositif.findOne({entityId : item.entityId}).populate('positions');
+              console.log("write entity "+dispositifCreated.positions);
+
+            });
+          });
           }
         /*
         let result = await Dispositif.find();
         console.log(result);
         */
-    }
-    sails.on('lifted',initializeDynamicDatabase);
-    
-},
+      }
+      async function fetchBeacon(){
+        console.log('http://127.0.0.1:4910/beacons/');
+        requestify.get('http://127.0.0.1:4910/beacons/').then((response) => {
+            response.getBody();
+            let data = JSON.parse(response.body);
+            console.log(data);
+            data.forEach(async (item,index) => {
+               let beacon = await Beacon.findOne({
+                id : item.id
+              });
+              if (beacon) {
+                await Beacon.updateOne({id : item.id}).set(item);
+              }
+              else{
+                await Beacon.create(Object.assign({}, item));
+              }
+            });
+          });
+      }
+
+      sails.on('lifted',initializeDynamicDatabase);
+
+    },
 
 
-routes: {
+    routes: {
 
       /**
        * Runs before every matching route.
@@ -231,11 +210,11 @@ routes: {
        * @param {Function} next
        */
        before: {
-           '/*': {
-               skipAssets: true,
-               fn: async function(req, res, next){
+         '/*': {
+           skipAssets: true,
+           fn: async function(req, res, next){
 
-                   var url = require('url');
+             var url = require('url');
 
             // First, if this is a GET request (and thus potentially a view),
             // attach a couple of guaranteed locals.
@@ -245,7 +224,7 @@ routes: {
               // run in "production mode" without unnecessarily involving complexities
               // with webpack et al.)
               if (res.locals._environment !== undefined) {
-                  throw new Error('Cannot attach Sails environment as the view local `_environment`, because this view local already exists!  (Is it being attached somewhere else?)');
+                throw new Error('Cannot attach Sails environment as the view local `_environment`, because this view local already exists!  (Is it being attached somewhere else?)');
               }
               res.locals._environment = sails.config.environment;
 
@@ -254,7 +233,7 @@ routes: {
               // > Note that, depending on the request, this may or may not be set to the
               // > logged-in user record further below.
               if (res.locals.me !== undefined) {
-                  throw new Error('Cannot attach view local `me`, because this view local already exists!  (Is it being attached somewhere else?)');
+                throw new Error('Cannot attach view local `me`, because this view local already exists!  (Is it being attached somewhere else?)');
               }
               res.locals.me = undefined;
             }//ﬁ
@@ -273,11 +252,11 @@ routes: {
             // > case you want to run it on a real, physical mobile/IoT device)
             var configuredBaseHostname;
             try {
-                configuredBaseHostname = url.parse(sails.config.custom.baseUrl).host;
+              configuredBaseHostname = url.parse(sails.config.custom.baseUrl).host;
             } catch (unusedErr) { /*…*/}
             if ((sails.config.environment === 'staging' || sails.config.environment === 'production') && !req.isSocket && req.method === 'GET' && req.hostname !== configuredBaseHostname) {
-                sails.log.info('Redirecting GET request from `'+req.hostname+'` to configured expected host (`'+configuredBaseHostname+'`)...');
-                return res.redirect(sails.config.custom.baseUrl+req.url);
+              sails.log.info('Redirecting GET request from `'+req.hostname+'` to configured expected host (`'+configuredBaseHostname+'`)...');
+              return res.redirect(sails.config.custom.baseUrl+req.url);
             }//•
 
             // No session? Proceed as usual.
@@ -289,28 +268,28 @@ routes: {
 
             // Otherwise, look up the logged-in user.
             var loggedInUser = await User.findOne({
-                id: req.session.userId
+              id: req.session.userId
             });
 
             // If the logged-in user has gone missing, log a warning,
             // wipe the user id from the requesting user agent's session,
             // and then send the "unauthorized" response.
             if (!loggedInUser) {
-                sails.log.warn('Somehow, the user record for the logged-in user (`'+req.session.userId+'`) has gone missing....');
-                delete req.session.userId;
-                return res.unauthorized();
+              sails.log.warn('Somehow, the user record for the logged-in user (`'+req.session.userId+'`) has gone missing....');
+              delete req.session.userId;
+              return res.unauthorized();
             }
 
             // Add additional information for convenience when building top-level navigation.
             // (i.e. whether to display "Dashboard", "My Account", etc.)
             if (!loggedInUser.password || loggedInUser.emailStatus === 'unconfirmed') {
-                loggedInUser.dontDisplayAccountLinkInNav = true;
+              loggedInUser.dontDisplayAccountLinkInNav = true;
             }
 
             // Expose the user record as an extra property on the request object (`req.me`).
             // > Note that we make sure `req.me` doesn't already exist first.
             if (req.me !== undefined) {
-                throw new Error('Cannot attach logged-in user as `req.me` because this property already exists!  (Is it being attached somewhere else?)');
+              throw new Error('Cannot attach logged-in user as `req.me` because this property already exists!  (Is it being attached somewhere else?)');
             }
             req.me = loggedInUser;
 
@@ -321,12 +300,12 @@ routes: {
             var MS_TO_BUFFER = 60*1000;
             var now = Date.now();
             if (loggedInUser.lastSeenAt < now - MS_TO_BUFFER) {
-                User.updateOne({id: loggedInUser.id})
-                .set({ lastSeenAt: now })
-                .exec((err)=>{
-                    if (err) {
-                        sails.log.error('Background task failed: Could not update user (`'+loggedInUser.id+'`) with a new `lastSeenAt` timestamp.  Error details: '+err.stack);
-                        return;
+              User.updateOne({id: loggedInUser.id})
+              .set({ lastSeenAt: now })
+              .exec((err)=>{
+                if (err) {
+                  sails.log.error('Background task failed: Could not update user (`'+loggedInUser.id+'`) with a new `lastSeenAt` timestamp.  Error details: '+err.stack);
+                  return;
                 }//•
                 sails.log.verbose('Updated the `lastSeenAt` timestamp for user `'+loggedInUser.id+'`.');
                 // Nothing else to do here.
@@ -338,23 +317,23 @@ routes: {
             // > Note that we make sure a local named `me` doesn't already exist first.
             // > Also note that we strip off any properties that correspond with protected attributes.
             if (req.method === 'GET') {
-                if (res.locals.me !== undefined) {
-                    throw new Error('Cannot attach logged-in user as the view local `me`, because this view local already exists!  (Is it being attached somewhere else?)');
-                }
+              if (res.locals.me !== undefined) {
+                throw new Error('Cannot attach logged-in user as the view local `me`, because this view local already exists!  (Is it being attached somewhere else?)');
+              }
 
               // Exclude any fields corresponding with attributes that have `protect: true`.
               var sanitizedUser = _.extend({}, loggedInUser);
               for (let attrName in User.attributes) {
-                  if (User.attributes[attrName].protect) {
-                      delete sanitizedUser[attrName];
-                  }
+                if (User.attributes[attrName].protect) {
+                  delete sanitizedUser[attrName];
+                }
               }//∞
 
               // If there is still a "password" in sanitized user data, then delete it just to be safe.
               // (But also log a warning so this isn't hopelessly confusing.)
               if (sanitizedUser.password) {
-                  sails.log.warn('The logged in user record has a `password` property, but it was still there after pruning off all properties that match `protect: true` attributes in the User model.  So, just to be safe, removing the `password` property anyway...');
-                  delete sanitizedUser.password;
+                sails.log.warn('The logged in user record has a `password` property, but it was still there after pruning off all properties that match `protect: true` attributes in the User model.  So, just to be safe, removing the `password` property anyway...');
+                delete sanitizedUser.password;
               }//ﬁ
 
               res.locals.me = sanitizedUser;
@@ -373,10 +352,10 @@ routes: {
             res.setHeader('Cache-Control', 'no-cache, no-store');
 
             return next();
+          }
         }
+      }
     }
-}
-}
-};
+  };
 
 };
