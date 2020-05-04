@@ -1,0 +1,7 @@
+<div class="entity">
+  <div class="entity-info">
+  	<div class="entity-id"><%= entity.entityMacAddress; %></div>
+    <div class="entity-display-name"><input class="form-control" type="text" id="disp-<%= entity.entityId; %>" placeholder="Nom du nouveau dispositif"></div>
+    <div class="entity-MAC"><button @click="addEntity(<%= entity.entityId; %>)" class="btn btn-success">Ajouter ce dispositif aux dispositifs connus</button></div>
+  </div> 
+</div>

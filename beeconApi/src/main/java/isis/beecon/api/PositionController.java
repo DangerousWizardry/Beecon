@@ -59,13 +59,12 @@ public class PositionController {
 		for(PositionPostDTO positionDTO : listePositionDTO){
 			Beacon b = beaconDAO.findByAddMac(positionDTO.getAddresseMacBalise());
 			System.out.println(b);
-			if(b!=null){ 
-                                      
+			if(b!=null){        
 				Dispositif d = dispositifDAO.findByEntityMacAddress(positionDTO.getAddresseMacDispositif());
 				System.out.println(d);
 				Position p;
 				if(d==null){
-					d = new Dispositif("unknown entity", "", positionDTO.getAddresseMacDispositif(), false);
+					d = new Dispositif("unknown entity", "Not implemented yet", positionDTO.getAddresseMacDispositif(), false);
 					dispositifDAO.save(d);
 					p = new Position(new Date(positionDTO.getTimestamp()), positionDTO.getAttenuation(), b, d);
 				}

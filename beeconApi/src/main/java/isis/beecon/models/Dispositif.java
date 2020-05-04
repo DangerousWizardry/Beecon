@@ -24,7 +24,7 @@ import javax.persistence.OneToOne;
 public class Dispositif{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int entityId;
+	private Long entityId;
 	private String entityDisplayName;
 	private String entityFullName;
 	private String entityMacAddress;
@@ -44,11 +44,11 @@ public class Dispositif{
 
 	public Dispositif(){}
 
-	public int getEntityId() {
+	public Long getEntityId() {
 		return entityId;
 	}
 
-	public void setEntityId(int entityId) {
+	public void setEntityId(Long entityId) {
 		this.entityId = entityId;
 	}
 

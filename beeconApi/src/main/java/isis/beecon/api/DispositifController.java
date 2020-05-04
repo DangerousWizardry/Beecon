@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.TreeSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,5 +65,18 @@ public class DispositifController {
 			
 		});
 		return dispositifs;
+	}
+	@CrossOrigin(origins = "*")
+	@PatchMapping("/{id}")
+	@ResponseBody
+	public String patchArticle(@PathVariable("id") Long id,@RequestBody Dispositif patch) {
+		Dispositif disp = dispositifDAO.findById(id).get();
+		if (patch.getEntityDisplayName() != null) {
+			disp.setEntityDisplayName(patch.getEntityDisplayName());
+			disp.setEntityRegistered(true);
+			dispositifDAO.save(disp);
+			return "1";
+		}
+		return "0";
 	}
 }

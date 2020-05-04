@@ -1,38 +1,27 @@
-<div id="entitylist">
+<div id="entity">
 <h1 class="purple">Entity</h1>
 <div class="entitiesproperties">
-	<h2>Known Entity</h2>
+	<h2>Dispositifs Enregistré</h2>
 		<div class="contenu">
+			<div class="entity header">
+			  <div class="entity-info">
+			  	<div class="entity-id">ID</div>
+			    <div class="entity-display-name">Nom</div>
+			    <div class="entity-MAC">Adresse MAC</div>
+			  </div> 
+			</div>
 			<% knownEntities.forEach(function(entity){ %>
 				<%- include('../layouts/layout-entity-details.ejs', {entity: entity}); %>
 			<% }); %>
 		</div>
 </div>
 <div class="entitiesproperties">
-	<h2>Unknow Entity</h2>
+	<h2>Dispositifs inconnus</h2>
 		<div class="contenu">
-			<% unknownEntities.forEach(function(entity){ %>
-				<%- include('../layouts/layout-entity-details.ejs', {entity: entity}); %>
+			<% unknownEntities.forEach(function(entity,idx){ %>
+				<%- include('../layouts/layout-entity-details-unknown.ejs', {entity: entity}); %>
 			<% }); %>
 		</div>
 </div>
 
-<div>
-	<form>
-		<label for="theunknowentities">Liste des entités inconnues : </label>
-		<select id="liste"></select>
-		<input type="button" id="ajout" value="Enregistrer">
-	</form>
-	<script>
-		var select = document.getElementById("liste");
-		var option = select.getElementsByTagName('option');
-		unknownEntities.forEach(
-		select.options[selectajout.length]=new Option (entity.entityDisplayName,entity.entityDisplayName))
-		document.getElementById("ajout").addEventListener("click",enregistrer);
-		function enregistrer(){
-			let entity = document.getElementById("liste").options[choice].value;
-			entity.entityRegistered= true;
-		}
-	</script>
-</div>
 </div>

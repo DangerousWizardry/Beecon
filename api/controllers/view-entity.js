@@ -19,6 +19,6 @@ module.exports = {
 
 
   fn: async function () {
-    return {knownEntities : await Dispositif.find(),unknownEntities : []};
+    return {knownEntities : await Dispositif.find({entityRegistered:true}),unknownEntities : await Dispositif.find({entityRegistered:false})};
   }
 };
