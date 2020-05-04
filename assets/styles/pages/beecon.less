@@ -1,0 +1,25 @@
+#beecon{
+	padding: 30px;
+	.blue{
+		text-align: center;
+		color:@blue;
+	}
+	.btn.btn-primary{
+		position: absolute;
+		right: 60px;
+		top: 75px;
+	}
+	.beecon-container{
+		display: flex;
+		flex-direction: column;
+	}
+	.beecon{
+		display: grid;
+		grid-template-columns: 20% 40% 40%;
+		padding: 10px;
+		border-top: 1px solid rgba(0,0,0,0.2);
+		&.header{
+			font-weight: bold;
+		}
+	}
+}
