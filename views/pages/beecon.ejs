@@ -1,11 +1,14 @@
-<div id="beecon">
+<div id="beecon" v-cloak>
 <h1 class="blue">Beecon</h1>
 <h2>Liste des beecons</h2>
+<div id="message"></div>
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAddBeecon">Ajouter un beecon</button>
 <div class="beeconContainer mt-5">
 	<div class="beecon header"><span>#</span><span>Nom du beecon</span><span>Addresse MAC</span></div>
-	<div class="beecon"><span>12</span><span>Beecon 1</span><span>14A:350D::22:297</span></div>
-</div>
+	<% beacons.forEach(function(beacon){ %>
+		<div class="beecon"><span><%= beacon.id %></span><span><%= beacon.nom %></span><span><%= beacon.addMac %></span></div>
+	<% }); %>
+	
 </div>
 <div class="modal" tabindex="-1" role="dialog" id="modalAddBeecon">
   <div class="modal-dialog" role="document">
@@ -17,10 +20,10 @@
         </button>
       </div>
       <div class="modal-body">
-        <form method="POST" action="" class="form-group">
-        	<p><b>Nom du beecon</b> <input type="text" name="beeconName" class="form-control"></p>
-        	<p><b>Mac du beecon</b> <input type="text" name="beeconMac" class="form-control"></p>
-        	<center><input type="submit" class="btn btn-primary" name="subBeecon" value="Enregistrer ce beecon"></center>
+        <form class="form-group" v-on:submit.stop.prevent="addNewBeacon">
+        	<p><b>Nom du beecon</b> <input type="text" id="beeconName" class="form-control"></p>
+        	<p><b>Mac du beecon</b> <input type="text" id="beeconMac" class="form-control"></p>
+        	<center><input type="submit" class="btn btn-primary ex" name="subBeecon" value="Enregistrer ce beecon"></center>
         </form>
       </div>
       <div class="modal-footer">
@@ -28,4 +31,5 @@
       </div>
     </div>
   </div>
+</div>
 </div>

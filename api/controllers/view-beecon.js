@@ -20,7 +20,9 @@ module.exports = {
 
 
   fn: async function () {
-
+    return  {
+        beacons : await Beacon.find()
+      };
   }
 
 
