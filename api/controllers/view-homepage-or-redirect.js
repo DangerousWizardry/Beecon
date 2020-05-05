@@ -26,7 +26,7 @@ module.exports = {
 
   fn: async function () {
     var nestedPop = require('nested-pop');
-    var entityList = await Dispositif.find().populate('positions',{sort: 'timestamp DESC'}).then(
+    var entityList = await Dispositif.find({entityRegistered:true}).populate('positions',{sort: 'timestamp DESC'}).then(
       function(dispositifs) {
         return nestedPop(dispositifs, {
             positions: {

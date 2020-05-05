@@ -102,6 +102,7 @@
         fetchBeacon();
         setInterval(fetchPosition,2000);
         setInterval(fetchBeacon,10000);
+        setInterval(fetchEntity,10000);
       }
 
       var requestify = require('requestify');
@@ -127,7 +128,7 @@
             });
             if (data.length>0) {
               var nestedPop = require('nested-pop');
-              var newData = await Dispositif.find().populate('positions',{sort: 'timestamp DESC'}).then(
+              var newData = await Dispositif.find({entityRegistered:true}).populate('positions',{sort: 'timestamp DESC'}).then(
                 function(dispositifs) {
                   return nestedPop(dispositifs, {
                     positions: {
@@ -194,7 +195,24 @@
             });
           });
       }
-
+      async function fetchEntity(){
+        console.log('http://127.0.0.1:4910/dispositifs/');
+        requestify.get('http://127.0.0.1:4910/dispositifs/').then((response) => {
+            response.getBody();
+            let data = JSON.parse(response.body);
+            data.forEach(async (item,index) => {
+               let beacon = await Dispositif.findOne({
+                entityId : item.entityId
+              });
+              if (beacon) {
+                await Dispositif.updateOne({entityId : item.entityId}).set(item);
+              }
+              else{
+                await Dispositif.create(Object.assign({}, item));
+              }
+            });
+          });
+      }
       sails.on('lifted',initializeDynamicDatabase);
 
     },

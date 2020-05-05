@@ -34,14 +34,15 @@ parasails.registerPage('entity', {
           return response.text();
         })
         .then( (text) => {
-          if (text == 1) {
-            $("#message").html('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Beecon ajouté</strong> Votre nouveau beecon a été enregistré et va être pris en compte dans quelques secondes<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+          console.log(text);
+          if (text == "1") {
+            $("#message").html('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Entité ajouté</strong> Votre nouvel entité a été enregistrée et va être pris en compte dans quelques secondes<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
           }
           else{
             $("#message").html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Une erreur est survenue</strong> Merci de vérifier vos champs et/ou de réessayer dans quelques secondes<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
           }
           $('.alert').alert();
-          //setTimeout(function(){window.location.reload()},5000);
+          setTimeout(function(){window.location.reload()},5000);
         }).catch( (error) => console.log(error))
         }
       

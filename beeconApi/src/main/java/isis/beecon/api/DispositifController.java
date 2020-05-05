@@ -58,12 +58,6 @@ public class DispositifController {
     @ResponseBody
 	public List<Dispositif> getAllDispositif(){
 		List<Dispositif> dispositifs = dispositifDAO.findAll();
-		dispositifs.forEach((d) ->{
-			d.getPosition().forEach((p)->{
-				p.getBeacon();
-			});
-			
-		});
 		return dispositifs;
 	}
 	@CrossOrigin(origins = "*")
